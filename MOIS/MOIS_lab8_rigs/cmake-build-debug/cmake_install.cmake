@@ -1,4 +1,4 @@
-# Install script for directory: /home/anastasiya/CLionProjects/MOIS_lab8_rigs
+# Install script for directory: /home/anastasiya/university/MOIS/MOIS_lab8_rigs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

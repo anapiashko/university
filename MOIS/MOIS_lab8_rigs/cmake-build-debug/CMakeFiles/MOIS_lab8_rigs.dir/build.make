@@ -43,10 +43,10 @@ RM = /home/anastasiya/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/192.6817.32
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/anastasiya/CLionProjects/MOIS_lab8_rigs
+CMAKE_SOURCE_DIR = /home/anastasiya/university/MOIS/MOIS_lab8_rigs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug
+CMAKE_BINARY_DIR = /home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MOIS_lab8_rigs.dir/depend.make
@@ -59,42 +59,42 @@ include CMakeFiles/MOIS_lab8_rigs.dir/flags.make
 
 CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o: CMakeFiles/MOIS_lab8_rigs.dir/flags.make
 CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o -c /home/anastasiya/CLionProjects/MOIS_lab8_rigs/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o -c /home/anastasiya/university/MOIS/MOIS_lab8_rigs/main.cpp
 
 CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/CLionProjects/MOIS_lab8_rigs/main.cpp > CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/university/MOIS/MOIS_lab8_rigs/main.cpp > CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.i
 
 CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/CLionProjects/MOIS_lab8_rigs/main.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/university/MOIS/MOIS_lab8_rigs/main.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.s
 
 CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o: CMakeFiles/MOIS_lab8_rigs.dir/flags.make
 CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o: ../Fields.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o -c /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Fields.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o -c /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Fields.cpp
 
 CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Fields.cpp > CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Fields.cpp > CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.i
 
 CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Fields.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Fields.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.s
 
 CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o: CMakeFiles/MOIS_lab8_rigs.dir/flags.make
 CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o: ../Task1.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o -c /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Task1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o -c /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Task1.cpp
 
 CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Task1.cpp > CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Task1.cpp > CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.i
 
 CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/CLionProjects/MOIS_lab8_rigs/Task1.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/anastasiya/university/MOIS/MOIS_lab8_rigs/Task1.cpp -o CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.s
 
 # Object files for target MOIS_lab8_rigs
 MOIS_lab8_rigs_OBJECTS = \
@@ -110,7 +110,7 @@ MOIS_lab8_rigs: CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o
 MOIS_lab8_rigs: CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o
 MOIS_lab8_rigs: CMakeFiles/MOIS_lab8_rigs.dir/build.make
 MOIS_lab8_rigs: CMakeFiles/MOIS_lab8_rigs.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable MOIS_lab8_rigs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable MOIS_lab8_rigs"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MOIS_lab8_rigs.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -123,6 +123,6 @@ CMakeFiles/MOIS_lab8_rigs.dir/clean:
 .PHONY : CMakeFiles/MOIS_lab8_rigs.dir/clean
 
 CMakeFiles/MOIS_lab8_rigs.dir/depend:
-	cd /home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/anastasiya/CLionProjects/MOIS_lab8_rigs /home/anastasiya/CLionProjects/MOIS_lab8_rigs /home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug /home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug /home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/anastasiya/university/MOIS/MOIS_lab8_rigs /home/anastasiya/university/MOIS/MOIS_lab8_rigs /home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug /home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug /home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MOIS_lab8_rigs.dir/depend
 

@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/Fields.cpp" "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o"
-  "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/Task1.cpp" "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o"
-  "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/main.cpp" "/home/anastasiya/CLionProjects/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o"
+  "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/Fields.cpp" "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o"
+  "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/Task1.cpp" "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o"
+  "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/main.cpp" "/home/anastasiya/university/MOIS/MOIS_lab8_rigs/cmake-build-debug/CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
