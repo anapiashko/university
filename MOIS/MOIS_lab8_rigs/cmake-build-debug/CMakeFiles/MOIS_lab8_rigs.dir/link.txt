@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/MOIS_lab8_rigs.dir/main.cpp.o CMakeFiles/MOIS_lab8_rigs.dir/Fields.cpp.o CMakeFiles/MOIS_lab8_rigs.dir/Task1.cpp.o  -o MOIS_lab8_rigs 
