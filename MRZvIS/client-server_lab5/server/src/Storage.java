@@ -30,7 +30,7 @@ public class Storage {
         long end = System.currentTimeMillis();
         long time = (end - start);
 
-        System.out.println("time = " + time);
+       // System.out.println("time = " + time);
 
         return time;
     }

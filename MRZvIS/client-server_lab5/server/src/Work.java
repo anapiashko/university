@@ -1,12 +1,18 @@
 public class Work {
 
-    private final int portion = 4; //порция
+    private int portion; //порция
 
     private static long  start = System.currentTimeMillis();
 
-    private Mine mine = new Mine(portion);
+    private Mine mine;
 
-    private Storage storage = new Storage(portion);
+    private Storage storage;
+
+    public Work(int portion){
+        this.portion = portion;
+        this.mine = new Mine(portion);
+        this.storage = new Storage(portion);
+    }
 
     public String workingProcess() {
 

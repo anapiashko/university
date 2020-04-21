@@ -27,13 +27,15 @@ public class Server {
                         // и отправлять
                         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-                        Work work = new Work();
+                        String word = in.readLine(); // ждём пока клиент что-нибудь нам напишет
+                        System.out.println("Word from client : " + word);
+
+                        int portion = Integer.parseInt(word);
+                        Work work = new Work(portion);
                         String response = work.workingProcess();
 
-                        String word = in.readLine(); // ждём пока клиент что-нибудь нам напишет
-                        System.out.println(word);
                         // не долго думая отвечает клиенту
-                        out.write("Привет, это Сервер! Подтверждаю, вы написали : " + word + " and response from server : " + response + "\n");
+                        out.write("Привет, это Сервер! Подтверждаю, вы написали : " + word + "\r\n и ответ : " + response + "\n");
                         out.flush(); // выталкиваем все из буфера
 
                     } finally { // в любом случае сокет будет закрыт
