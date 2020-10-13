@@ -1,0 +1,37 @@
+#!/bin/sh
+search_file() {
+    echo "File name:"
+	read file_name
+	echo "Path to directory:"
+	read dir_name
+	cd $dir_name 
+    pwd $file_name
+}
+
+copy_file() {
+    echo "File name:"
+	read file_name
+	echo "Path to directory:"
+	read dir_name
+	cp $file_name $dir_name
+}
+echo "1 - search file in directory."
+echo "2 - copy file in other directory."
+echo "3 - exit."
+
+while [ 1 ] 
+do
+echo "Input your choise:"
+read action
+    case $action in
+        1)
+            search_file;;
+        2)
+            copy_file;;
+        3)
+            echo "Good bye!"
+            break;;
+        *)
+            echo "Incorrect value."
+    esac
+done
