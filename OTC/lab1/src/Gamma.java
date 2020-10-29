@@ -19,8 +19,8 @@ public class Gamma {
             gamma_x[k] = (-1/l)*(Math.log(Math.abs(sum)));
         }
 
-        for (int j = 0; j < size_x; j++) {
-      //      System.out.println(x[j]);
+        for (int j = 0; j < 20; j++) {
+            System.out.println(gamma_x[j]);
         }
 
         return gamma_x;

@@ -14,9 +14,9 @@ public class Uniform {
             uniform_x[i] = a + (b - a) * R[i];
         }
 
-//        for (int i = 0; i < R.length; i++) {
-//            System.out.println(x[i]);
-//        }
+        for (int i = 0; i < R.length; i++) {
+            System.out.println(uniform_x[i]);
+        }
 
         return uniform_x;
     }
