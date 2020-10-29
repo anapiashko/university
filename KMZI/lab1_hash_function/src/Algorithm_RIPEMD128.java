@@ -36,8 +36,7 @@ public class Algorithm_RIPEMD128 {
 
     // Добавление дополнительных битов.
     public void step_1_init() {
-        // вместо init
-        System.out.println("-----------bytes_meth------------");
+
         int numberBlocks = (message.length() /64) + 1;
 
         byteMessage = new byte[numberBlocks * 64];
@@ -55,9 +54,9 @@ public class Algorithm_RIPEMD128 {
         }
 
         for (int i = 0; i < byteMessage.length; i++) {
-            System.out.println(i + ". " + byteMessage[i]);
+          //  System.out.println(i + ". " + byteMessage[i]);
         }
-        System.out.println("BYTE MESSAGE LENGTH = " + byteMessage.length);
+        //System.out.println("BYTE MESSAGE LENGTH = " + byteMessage.length);
     }
 
     // Добавление длины сообщения в конец сообщения
@@ -86,7 +85,7 @@ public class Algorithm_RIPEMD128 {
 
         System.out.println("Message length = " + message.length());
         for (int i = 0; i < byteMessage.length; i++) {
-            System.out.println(i + ". " + byteMessage[i]);
+       //     System.out.println(i + ". " + byteMessage[i]);
         }
     }
 
@@ -130,15 +129,6 @@ public class Algorithm_RIPEMD128 {
                 B2 = T;
 
             }
-            System.out.println("A1 = " + A1);
-            System.out.println("B1 = " + B1);
-            System.out.println("C1 = " + C1);
-            System.out.println("D1 = " + D1);
-
-            System.out.println("A2 = " + A2);
-            System.out.println("B2 = " + B2);
-            System.out.println("C2 = " + C2);
-            System.out.println("D2 = " + D2);
 
             T = (h1.add(C1).add(D2)).mod(BigInteger.valueOf(2).pow(32));
             h1 = (h2.add(D1).add(A2)).mod(BigInteger.valueOf(2).pow(32));
@@ -146,12 +136,6 @@ public class Algorithm_RIPEMD128 {
             h3 = (h0.add(B1).add(C2)).mod(BigInteger.valueOf(2).pow(32));
             h0 = T;
         }
-
-        System.out.println("------------10-----------");
-        System.out.println("h0 = " + h0);
-        System.out.println("h1 = " + h1);
-        System.out.println("h2 = " + h2);
-        System.out.println("h3 = " + h3);
 
         System.out.println("------------16-----------");
         System.out.println("h0 = " + h0.toString(16));
@@ -170,18 +154,6 @@ public class Algorithm_RIPEMD128 {
         return arr;
     }
 
-    BigInteger h32Bit(BigInteger h) {
-        if(h.toString(2).length() < 32) {
-            StringBuffer strB = new StringBuffer(h.toString(2));
-            while (strB.length() != 32) {
-                strB.insert(0, "0");
-            }
-            BigInteger bigInt = new BigInteger(strB.toString(), 2);
-            h = bigInt;
-            System.out.println("less : " + h.toString(2));
-        }
-        return h;
-    }
     BigInteger utfToBin(byte[] utf) {
 
         // Convert to binary
