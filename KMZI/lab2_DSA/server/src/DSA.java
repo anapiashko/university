@@ -1,26 +1,14 @@
 import java.math.BigInteger;
 
 public class DSA {
-    public static void main(String[] args) {
 
-        BigInteger P = new BigInteger("6703903964971298549787012499102923063739682910296196688861780721860882015036773488400937149083451713845015929093243075248275515306546773467380133546744897");
-        BigInteger q = new BigInteger("6561744538617343330441949809163252173");
+    public static boolean checkSignature(String message, BigInteger P, BigInteger q, BigInteger G, BigInteger Y, BigInteger[] rs) {
 
-        BigInteger h = BigInteger.valueOf(2);
-        BigInteger G = h.modPow(P.subtract(BigInteger.ONE).divide(q), P);
-
-        BigInteger x = BigInteger.valueOf(7);
-
-        BigInteger Y = (G.pow(x.intValue())).mod(P);
+        BigInteger r = rs[0];
+        BigInteger s = rs[1];
 
         RIPEMD128 ripemd128 = new RIPEMD128();
-        BigInteger m = ripemd128.hash("abc");
-        BigInteger k = BigInteger.valueOf(3);
-        BigInteger r = ((G.pow(k.intValue())).mod(P)).mod(q);
-        BigInteger s = (k.modInverse(q).multiply((x.multiply(r)).add(m))).mod(q);
-
-        System.out.println("r = " + r);
-        System.out.println("s = " + s);
+        BigInteger m = ripemd128.hash(message);
 
         BigInteger w = s.modInverse(q);
 
@@ -32,6 +20,9 @@ public class DSA {
                 .mod(P)
                 .mod(q);
 
+        System.out.println("r = " + r);
         System.out.println("v = " + V);
+
+        return r.compareTo(V) == 0;
     }
 }

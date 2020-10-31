@@ -1,6 +1,7 @@
 import sun.nio.cs.Surrogate;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.Socket;
 
 public class Client {
@@ -27,12 +28,22 @@ public class Client {
                 // если соединение произошло и потоки успешно созданы - мы можем
                 //  работать дальше и предложить клиенту что то ввести
                 // если нет - вылетит исключение
-                String word = reader.readLine(); // ждём пока клиент что-нибудь
-                // не напишет в консоль
+
+               // String message = reader.readLine(); // ждём пока клиент что-нибудь не напишет в консоль
+                String message = "abc";
+
+                BigInteger[] rs = DSA.subscribe(message);
+
+                out.write(message + "\n"); // отправляем сообщение на сервер
+                out.write(rs[0] + "\n"); // отправляем r на сервер
+                out.write(rs[1] + "\n"); // отправляем s на сервер
+                out.write(DSA.P + "\n"); // отправляем P на сервер
+                out.write(DSA.q + "\n"); // отправляем q на сервер
+                out.write(DSA.Y + "\n"); // отправляем Y на сервер
+                out.write(DSA.G + "\n"); // отправляем G на сервер
 
 
-
-                out.write(word + "\n"); // отправляем сообщение на сервер
+//                out.write(message + "\n"); // отправляем сообщение на сервер
                 out.flush();
                 String serverWord = in.readLine(); // ждём, что скажет сервер
                 System.out.println(serverWord); // получив - выводим на экран
