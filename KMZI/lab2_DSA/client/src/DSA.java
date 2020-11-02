@@ -9,8 +9,16 @@ public class DSA {
 
     public static BigInteger[] subscribe(String message) {
 
-        P = new BigInteger("6703903964971298549787012499102923063739682910296196688861780721860882015036773488400937149083451713845015929093243075248275515306546773467380133546744897");
-        q = new BigInteger("6561744538617343330441949809163252173");
+        P = new BigInteger("6703903964971298549787012499102923063739682910296196688861780721860882015036773488400937149083451713845015929093243056271952419563142882186777485787833071");
+        q = new BigInteger("2643573169557117016987442101865800057");
+
+//        BigInteger[] generated = Generator.generate();
+//
+//        P = generated[1];
+//        q = generated[0];
+//
+//        System.out.println("p = " + P);
+//        System.out.println("q = " + q);
 
         BigInteger h = BigInteger.valueOf(2);
         G = h.modPow(P.subtract(BigInteger.ONE).divide(q), P);
@@ -29,17 +37,5 @@ public class DSA {
         System.out.println("s = " + s);
 
         return new BigInteger[]{r, s};
-
-//        BigInteger w = s.modInverse(q);
-//
-//        BigInteger u1 = (m.multiply(w)).mod(q);
-//        BigInteger u2 = (r.multiply(w)).mod(q);
-//
-//        BigInteger V = (G.modPow(u1,P))
-//                .multiply(Y.modPow(u2, P))
-//                .mod(P)
-//                .mod(q);
-//
-//        System.out.println("v = " + V);
     }
 }
