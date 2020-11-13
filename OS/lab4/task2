@@ -1,0 +1,5 @@
+#!/bin/bash
+find $2 -type f -user $1 -printf "%p %s\n" > $3
+echo -n "Number of files scanned: "
+find $2 -type f -user $1 | wc -l
+ 
