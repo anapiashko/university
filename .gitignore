@@ -1,9 +1,6 @@
-.idea/
+**/.idea/**
 *.iml
-cmake-build-debug/
-out/
+**/cmake-build-debug/**
+**/out/**
 .directory
 
-# Configs for OTC directory
-!OTC/**
-/OTC/lab1/.idea/
