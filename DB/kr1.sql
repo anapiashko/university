@@ -1,3 +1,4 @@
+drop table if exists Children;
 create table Children
 (
     TabNo int             not null,
@@ -6,6 +7,7 @@ create table Children
     Sex   enum ('m', 'f') null
 );
 
+drop table if exists Departments;
 create table Departments
 (
     DepNo int         not null
@@ -13,6 +15,7 @@ create table Departments
     Name  varchar(30) null
 );
 
+drop table if exists Employees;
 create table Employees
 (
     TabNo  int            not null
@@ -123,4 +126,12 @@ select d.DepNo, e.Sex from Departments d inner join Employees e on d.DepNo = e.D
 select d.DepNo, e.Sex, COUNT(d.DepNo) from Departments d
     inner join Employees e on d.DepNo = e.DepNo group by d.DepNo, e.Sex ;
 
-
+select Departments.DepNo, Departments.Name
+from Departments
+         right join (select DepNo
+                     from (select DepNo
+                           from Employees
+                           group by DepNo, Sex
+                           order by DepNo) as e_by_dep_and_sex
+                     group by DepNo
+                     having count(*) = 1) as gender_spec_deps on Departments.DepNo = gender_spec_deps.DepNo
