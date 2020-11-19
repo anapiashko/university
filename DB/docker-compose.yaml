@@ -1,0 +1,19 @@
+version: '3.3'
+
+volumes:
+  mysql_local:
+
+services:
+  mysql-app:
+    image: mysql:8.0.20
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: demo_db
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_pass
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - 4407:3306
+    volumes:
+      - mysql_local:/var/lib/mysql
+
