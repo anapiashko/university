@@ -83,45 +83,9 @@ WHERE oldC.tabno=youngC.tabno -- родные друг другу
   AND oldC.Sex = 'f'  -- старший - девочка (сестра)
   And youngC.Sex = 'm'; -- младший - мальчик (брат)
 
-select * from Employees where TabNo IN (909, 829,819,23,130,34,2,87);
-
-select d.DepNo, d.Name
-from Departments d
-    inner join Employees e on d.DepNo = e.DepNo
-where e.TabNo in (909, 829,819,23,130,34,2,87) and e.TabNo not in (988,100,110,56,88);
-
 -- сколько сотрудников в каждом отделе
 select d.DepNo, d.Name, COUNT(*) as Count_Emp from Departments d
     inner join Employees e on d.DepNo = e.DepNo group by e.DepNo;
-
--- только женщины
-select w.DepNo, w.Name, w.women from (select d.DepNo, d.Name,  count(*) as women
-        from Departments d
-            inner join Employees e on d.DepNo = e.DepNo
-         where e.TabNo in (909, 829,819,23,130,34,2,87) group by e.DepNo) as w
-inner join (
-        select d.DepNo, d.Name, COUNT(*) as Count_Emp from Departments d
-            inner join Employees e on d.DepNo = e.DepNo group by e.DepNo) as deps on w.DepNo = deps.DepNo
-        where deps.Count_Emp = w.women;
-
-select * from (
-(select * from Departments d
-where d.DepNo  in (select d.DepNo
-from Departments d
-         inner join Employees e on d.DepNo = e.DepNo
-            where e.TabNo in (909, 829,819,23,130,34,2,87))) as women
-
- left outer join
-
-(select * from Departments d
-where d.DepNo in (select d.DepNo
-                      from Departments d
-                               inner join   Employees e on d.DepNo = e.DepNo
-                      where e.TabNo in (988,100,110,56,88))) as men
-
-on women.DepNo = men.DepNo);
-
-select d.DepNo, e.Sex from Departments d inner join Employees e on d.DepNo = e.DepNo ;
 
 select d.DepNo, e.Sex, COUNT(d.DepNo) from Departments d
     inner join Employees e on d.DepNo = e.DepNo group by d.DepNo, e.Sex ;
@@ -134,4 +98,10 @@ from Departments
                            group by DepNo, Sex
                            order by DepNo) as e_by_dep_and_sex
                      group by DepNo
-                     having count(*) = 1) as gender_spec_deps on Departments.DepNo = gender_spec_deps.DepNo
+                     having count(*) = 1) as gender_spec_deps on Departments.DepNo = gender_spec_deps.DepNo;
+
+SELECT TabNo, DepNo, Name, Born, TIMESTAMPDIFF(YEAR,Born,CURDATE()) AS age
+       FROM Employees;
+
+
+
