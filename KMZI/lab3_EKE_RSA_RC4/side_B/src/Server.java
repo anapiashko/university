@@ -1,85 +1,110 @@
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
 public class Server {
 
-    private static Socket clientSocket; //сокет для общения
-    private static ServerSocket server; // серверсокет
+    private static Socket clientSocket; // сокет для общения
+    private static ServerSocket server; // сервер-сокет
     private static BufferedReader in; // поток чтения из сокета
     private static BufferedWriter out; // поток записи в сокет
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         try {
             try {
                 server = new ServerSocket(4004); // серверсокет прослушивает порт 4004
 
-                System.out.println("Сервер запущен!"); // хорошо бы серверу объявить о своем запуске
+                System.out.println("Сервер запущен!");
 
                 while (true) {
 
                     clientSocket = server.accept(); // accept() будет ждать пока кто-нибудь не захочет подключиться
 
-                    try { // установив связь и воссоздав сокет для общения с клиентом можно перейти
-                        // к созданию потоков ввода/вывода.
-                        // теперь мы можем принимать сообщения
+                    try {
                         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                        // и отправлять
-                        out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
+                        out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
                         BigInteger P = BigInteger.valueOf(4567);
 
-                        String response = in.readLine(); // ждём пока клиент что-нибудь нам напишет
+                        String encrPublicKey = in.readLine(); // ждём пока клиент напишет зашифрованный открытый ключ
 
-                        BigInteger encrOpenKey = new BigInteger(response);
+                        BigInteger encrOpenKey = new BigInteger(encrPublicKey);
                         RC4 rc4P = new RC4(P.toByteArray());
 
-                        byte[] decrOpenKey = rc4P.decrypt(encrOpenKey.toByteArray());
+                        byte[] decrOpenKey = rc4P.decrypt(encrOpenKey.toByteArray()); // расшифровываем открытый ключ
 
-                        System.out.println("encrypted open key = " + encrOpenKey);
+                        //System.out.println("encrypted open key = " + encrOpenKey);
                         System.out.println("decrypted open key = " + new BigInteger(decrOpenKey));
 
-//                        out.write("Привет, это Сервер! Подтверждаю, расшифрованный открытый ключ : " + new BigInteger(decrOpenKey) + "\n");
+                        // Генерируем сеансовый ключ Ks
+                        int max = 974293293, min = 11728;
+                        int r = (int) (Math.random() * (max - min + 1) + min);
+                        BigInteger Ks = BigInteger.valueOf(r);
+                        System.out.println("Ks = " + Ks);
 
-                        BigInteger Ks = BigInteger.valueOf(5);
+                        KeyFactory kf = KeyFactory.getInstance("RSA");
+                        X509EncodedKeySpec spec = new X509EncodedKeySpec(decrOpenKey);
+                        PublicKey publicKey = kf.generatePublic(spec);
 
-                        RC4 rc4OK = new RC4(decrOpenKey);
+                        Cipher cipher = Cipher.getInstance("RSA");
+                        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+                        byte[] x = cipher.doFinal(Ks.toByteArray()); // шифрование открытым ключот от клиента
 
-                        byte[] encr_Ks1 = rc4OK.encrypt(Ks.toByteArray());
+                        byte[] encr_Ks2 = rc4P.encrypt(x); // шифрование на ключе P
 
-                        byte[] encr_Ks2 = rc4P.encrypt(encr_Ks1);
-
-                        out.write(new BigInteger(encr_Ks2) + "\n");
+                        System.out.println("encrypted Ks = " + new BigInteger(encr_Ks2));
+                        out.write(new BigInteger(encr_Ks2) + "\n"); // отправляем клиенту зашифрованный Ks
                         out.flush(); // выталкиваем все из буфера
 
-                        // (4)
-                        String encr_Ra = in.readLine(); // ждём пока клиент напишет encr_Ra
+
+                        String encr_Ra = in.readLine(); // ждём пока клиент напишет зашифрованную строку Ra
+
+                        //  расшифрование Ra с помошью сеансового ключа Ks
                         RC4 rc4_Ks = new RC4(Ks.toByteArray());
                         byte[] decr_Ra = rc4_Ks.decrypt(new BigInteger(encr_Ra).toByteArray());
-                        System.out.println("encr_Ra = " + encr_Ra);
+                       // System.out.println("encr_Ra = " + encr_Ra);
                         System.out.println("decr_Ra = " + new BigInteger(decr_Ra));
 
-                        int max = 654352354, min = 15433;
-                        int r = (int) (Math.random() * (max - min + 1) + min);
+                        // Генерация строки Rb
+                        r = (int) (Math.random() * (max - min + 1) + min);
                         BigInteger Rb = new BigInteger((Integer.toString(r)).substring(0, 5));
                         System.out.println("случайная строка Rb : " + Rb);
 
-                        String RaRb =  new BigInteger(decr_Ra).toString() + Rb.toString();
+                        String RaRb =  new BigInteger(decr_Ra).toString() + Rb.toString(); // объединение Ra и Rb
 
-                        byte[] encr_RaRb = rc4_Ks.encrypt(new BigInteger(RaRb).toByteArray());
+                        byte[] encr_RaRb = rc4_Ks.encrypt(new BigInteger(RaRb).toByteArray()); // шифрование (Ra || Rb)
 
-                        System.out.println("RaRb = " + RaRb);
-                        System.out.println("encr_RaRb = " + new BigInteger(encr_RaRb));
+//                        System.out.println("RaRb = " + RaRb);
+//                        System.out.println("encr_RaRb = " + new BigInteger(encr_RaRb));
 
-                        out.write(new BigInteger(encr_RaRb) + "\n");
+                        out.write(new BigInteger(encr_RaRb) + "\n"); // Отправляем клиенту зашифрованное (Ra || Rb)
 
                         out.flush(); // выталкиваем все из буфера
 
-                    } finally { // в любом случае сокет будет закрыт
+                        String encr_Rb1 = in.readLine(); // ждём пока клиент напишет зашифрованную строку Rb1
+
+                        byte[] decr_Rb1 = rc4_Ks.decrypt((new BigInteger(encr_Rb1)).toByteArray());
+                        BigInteger Rb1 = new BigInteger(decr_Rb1);
+                        System.out.println("Rb1 = " + Rb1);
+
+                        if(Rb.compareTo(Rb1) == 0){
+                            System.out.println("Rb equals Rb1");
+                            System.out.println("Ks = " + Ks + " - accepted");
+                        }
+                    } finally {
                         clientSocket.close();
-                        // потоки тоже хорошо бы закрыть
                         in.close();
                         out.close();
                     }
