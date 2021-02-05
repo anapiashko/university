@@ -1,0 +1,6 @@
+string
+mother
+anna
+mam
+strings
+str
