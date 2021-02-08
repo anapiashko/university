@@ -12,11 +12,16 @@ public class HashTable {
         }
     }
 
+    // вставка элемента в таблицу
+    // метод add реализует класс OrderedList
     public void insert(String str) {
         int h = hash(str);
         table[h].add(str);
     }
 
+    // поик элемента в таблице
+    // возвращает boolean, который означает присутсвие/отсутствие элемента в таблице
+    // метод search реализует класс OrderedList
     public boolean search(String str) {
 
         int hash = hash(str);
@@ -26,6 +31,7 @@ public class HashTable {
         return index >= 0;
     }
 
+    // удаление элемента
     public void delete(String str) {
 
         int hash = hash(str);
@@ -33,13 +39,14 @@ public class HashTable {
         table[hash].delete(str);
     }
 
+    // вывод элементов таблицы с одинаковым хэшем, таким как у элемента str
     public void showListByHash(String str){
         int hash = hash(str);
 
         table[hash].print();
     }
 
-    // хэш функция
+    // хэш-функция
     int hash(String str) {
         str = str.toUpperCase();
         return (str.charAt(0) + str.charAt(1) + str.charAt(2)) % capacity;

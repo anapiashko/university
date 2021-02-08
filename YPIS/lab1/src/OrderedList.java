@@ -1,3 +1,6 @@
+/**
+ * Class implements ordered list
+ */
 public class OrderedList {
 
     private Node first, last;
@@ -19,24 +22,37 @@ public class OrderedList {
         Node node = first;
 
         // цикл вставки элемента в упорядоченный список
-        for (int i = 0; i < size; i++) {
+        int i;
+        for (i = 0; i < size; i++) {
 
             if (data.charAt(0) <= node.data.charAt(0)) {
 
-                addFirst(node.previous, node, data);
+                addElement(node.previous, node, data);
 
                 break;
             }
 
-            node = node.next;
+            if(node.next != null) {
+                node = node.next;
+            }
         }
 
+        // если необходима вставка в конец
+        if (i == size) {
+            addElement(node, node.previous, data);
+        }
         size = size + 1;
     }
 
     // возвращает индекс элемента в списке
     public int search(String data) {
         Node node = first;
+
+        // если список пустой
+        if (first == null) {
+            return -1;
+        }
+
         for (int i = 0; i < size; i++) {
             if (data.equals(node.data)) {
                 return i;
@@ -49,42 +65,46 @@ public class OrderedList {
     public void delete(String str) {
         int index = search(str);
 
-        if(index < 0){
+        if (index < 0) {
             return;
         }
 
+        // перемещаемся по списку до нужного индекса
         Node node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
 
         // если один элемент в списке
-        if(node.previous == null && node.next == null){
+        if (node.previous == null && node.next == null) {
             first = last = null;
         }
         // если это первый элемент
-        else if(node.previous == null && node.next != null){
+        else if (node.previous == null && node.next != null) {
             first = node.next;
             node.next.previous = null;
         }
         // если это последний элемент
-        else if(node.previous != null && node.next == null){
+        else if (node.previous != null && node.next == null) {
             node.previous.next = null;
         }
         // в остальных случаях
         else {
-           Node temp = node.previous;
-           temp.next = node.next;
-           node.next = temp;
+            Node temp = node.previous;
+            temp.next = node.next;
+            node.next = temp;
         }
         size = size - 1;
     }
 
-    public void addFirst(Node prev, Node next, String data) {
+    // добавление элемента в список между prev и next узлами
+    private void addElement(Node prev, Node next, String data) {
 
         final Node newNode = new Node(prev, next, data);
 
-        next.previous = newNode;
+        if(next != null) {
+            next.previous = newNode;
+        }
 
         if (prev != null) {
             prev.next = newNode;
@@ -102,6 +122,7 @@ public class OrderedList {
         }
     }
 
+    // один элемент списка
     private class Node {
         String data;
         Node next;

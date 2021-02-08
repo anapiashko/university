@@ -1,6 +1,6 @@
 string
 mother
 anna
-mam
-strings
-str
+modest
+tsrings
+rst
