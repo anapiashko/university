@@ -6,7 +6,7 @@ public class Main {
         String text = read();
         System.out.println("SOURCE TEXT : " + text);
 
-        String[] words = text.split("[\\s.,(); ]+");
+        String[] words = text.split("[.,(); ]+");
         String[] functions = text.split(";");
         for (String f : functions) {
             if (!correctFunction(f)) {
@@ -45,13 +45,14 @@ public class Main {
             } else if (symbol == '\"') {
                 System.out.format("%-20s%s\n", symbol, "Double quotes");
                 if (!closeQuote) {
-                    if (correctWord(words[wordCount].substring(1, words[wordCount].length() - 1))) {
-                        System.out.format("%-20s%s\n", words[wordCount].substring(1, words[wordCount].length() - 1), "String constant");
+                    String wordWithoutQuotes = words[wordCount].substring(1, words[wordCount].length() - 1);
+                    if (correctWord(wordWithoutQuotes)) {
+                        System.out.format("%-20s%s\n", wordWithoutQuotes, "String constant");
                         closeQuote = true;
                         i += words[wordCount].length() - 2;
                         wordCount++;
                     } else {
-                        System.out.println("word \"" + words[wordCount].substring(1, words[wordCount].length() - 1) + "\" is not correct");
+                        System.out.println("word \"" + wordWithoutQuotes + "\" is not correct");
                         return;
                     }
                 } else {
@@ -62,12 +63,12 @@ public class Main {
     }
 
     private static boolean correctWord(String word) {
-        String regex = "[a-zA-Z_][a-zA-Z0-9]+";
+        String regex = "[a-zA-Z_][a-zA-Z0-9]*";
         return word.matches(regex);
     }
 
     private static boolean correctFunction(String function) {
-        String regex = " *([a-zA-Z_][a-zA-Z0-9]+) *\\([a-zA-Z0-9 ,\"']*\\) *";
+        String regex = " *([a-zA-Z_][a-zA-Z0-9]*) *\\([a-zA-Z0-9 ,\"']*\\) *";
         return function.matches(regex);
     }
 
