@@ -35,7 +35,7 @@ void err();
 %%
 
 void err(){
-	printf("Wrong input");
+	printf("Wrong input: %s", yytext);
 }
 
 yywrap () {
