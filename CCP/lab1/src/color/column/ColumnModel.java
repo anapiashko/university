@@ -7,10 +7,10 @@ public class ColumnModel {
     private Light[] lights;
 
     public ColumnModel() {
-        this.lights = new Light[2];
-        lights[0] = new Light(Color.RED);
+        this.lights = new Light[1];
+//        lights[0] = new Light(Color.RED);
 //        lights[1] = new ColumnLight(Color.YELLOW, 10);
-        lights[1] = new Light(Color.GREEN);
+        lights[0] = new Light(Color.GREEN);
     }
 
     public Light[] getLights() {

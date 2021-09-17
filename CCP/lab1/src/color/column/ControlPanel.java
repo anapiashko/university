@@ -80,48 +80,48 @@ public class ControlPanel {
         /**
          * 3
          */
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        startButton = new JButton(Shape.CIRCLE.getName());
-        startButton.setFont(normalFont);
-        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
-        innerPanel.add(startButton, gbc);
-
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        startButton = new JButton(Shape.SQUARE.getName());
-        startButton.setFont(normalFont);
-        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
-        innerPanel.add(startButton, gbc);
-
-        gbc.gridwidth = 2;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        JButton changeButton = new JButton(Shape.TRIANGLE.getName());
-        changeButton.setFont(normalFont);
-        changeButton.addActionListener(new ChangeShapeActionListener(frame, model));
-        innerPanel.add(changeButton, gbc);
+//        gbc.gridwidth = 2;
+//        gbc.gridx = 0;
+//        gbc.gridy++;
+//        startButton = new JButton(Shape.CIRCLE.getName());
+//        startButton.setFont(normalFont);
+//        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
+//        innerPanel.add(startButton, gbc);
+//
+//        gbc.gridwidth = 2;
+//        gbc.gridx = 0;
+//        gbc.gridy++;
+//        startButton = new JButton(Shape.SQUARE.getName());
+//        startButton.setFont(normalFont);
+//        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
+//        innerPanel.add(startButton, gbc);
+//
+//        gbc.gridwidth = 2;
+//        gbc.gridx = 0;
+//        gbc.gridy++;
+//        JButton changeButton = new JButton(Shape.TRIANGLE.getName());
+//        changeButton.setFont(normalFont);
+//        changeButton.addActionListener(new ChangeShapeActionListener(frame, model));
+//        innerPanel.add(changeButton, gbc);
 
         /**
          * 4
          */
-//			gbc.gridwidth = 2;
-//			gbc.gridx = 0;
-//			gbc.gridy++;
-//			JButton changeButton = new JButton("Left");
-//			changeButton.setFont(normalFont);
-//			changeButton.addActionListener(new MoveActionListener(frame, model));
-//			innerPanel.add(changeButton, gbc);
-//
-//			gbc.gridwidth = 2;
-//			gbc.gridx = 0;
-//			gbc.gridy++;
-//			startButton = new JButton("Right");
-//			startButton.setFont(normalFont);
-//			startButton.addActionListener(new MoveActionListener(frame, model));
-//			innerPanel.add(startButton, gbc);
+			gbc.gridwidth = 2;
+			gbc.gridx = 0;
+			gbc.gridy++;
+			JButton changeButton = new JButton("Left");
+			changeButton.setFont(normalFont);
+			changeButton.addActionListener(new MoveActionListener(frame, model));
+			innerPanel.add(changeButton, gbc);
+
+			gbc.gridwidth = 2;
+			gbc.gridx = 0;
+			gbc.gridy++;
+			startButton = new JButton("Right");
+			startButton.setFont(normalFont);
+			startButton.addActionListener(new MoveActionListener(frame, model));
+			innerPanel.add(startButton, gbc);
 
         /**
          * 5
