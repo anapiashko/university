@@ -69,40 +69,40 @@ public class ControlPanel {
         /**
          * 2
          */
-			gbc.gridwidth = 2;
-			gbc.gridx = 0;
-			gbc.gridy++;
-			JButton changeButton = new JButton("Turn On/Off");
-			changeButton.setFont(normalFont);
-			changeButton.addActionListener(new TurnOnOffActionListener(frame, model));
-			innerPanel.add(changeButton, gbc);
+//			gbc.gridwidth = 2;
+//			gbc.gridx = 0;
+//			gbc.gridy++;
+//			JButton changeButton = new JButton("Turn On/Off");
+//			changeButton.setFont(normalFont);
+//			changeButton.addActionListener(new TurnOnOffActionListener(frame, model));
+//			innerPanel.add(changeButton, gbc);
 
         /**
          * 3
          */
-//			gbc.gridwidth = 2;
-//			gbc.gridx = 0;
-//			gbc.gridy++;
-//			startButton = new JButton(Shape.CIRCLE.getName());
-//			startButton.setFont(normalFont);
-//			startButton.addActionListener(new ChangeShapeActionListener(frame, model));
-//			innerPanel.add(startButton, gbc);
-//
-//			gbc.gridwidth = 2;
-//			gbc.gridx = 0;
-//			gbc.gridy++;
-//			startButton = new JButton(Shape.SQUARE.getName());
-//			startButton.setFont(normalFont);
-//			startButton.addActionListener(new ChangeShapeActionListener(frame, model));
-//			innerPanel.add(startButton, gbc);
-//
-//			gbc.gridwidth = 2;
-//			gbc.gridx = 0;
-//			gbc.gridy++;
-//			JButton changeButton = new JButton(Shape.TRIANGLE.getName());
-//			changeButton.setFont(normalFont);
-//			changeButton.addActionListener(new ChangeShapeActionListener(frame, model));
-//			innerPanel.add(changeButton, gbc);
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        startButton = new JButton(Shape.CIRCLE.getName());
+        startButton.setFont(normalFont);
+        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
+        innerPanel.add(startButton, gbc);
+
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        startButton = new JButton(Shape.SQUARE.getName());
+        startButton.setFont(normalFont);
+        startButton.addActionListener(new ChangeShapeActionListener(frame, model));
+        innerPanel.add(startButton, gbc);
+
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JButton changeButton = new JButton(Shape.TRIANGLE.getName());
+        changeButton.setFont(normalFont);
+        changeButton.addActionListener(new ChangeShapeActionListener(frame, model));
+        innerPanel.add(changeButton, gbc);
 
         /**
          * 4
