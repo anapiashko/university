@@ -107,40 +107,40 @@ public class ControlPanel {
         /**
          * 4
          */
-			gbc.gridwidth = 2;
-			gbc.gridx = 0;
-			gbc.gridy++;
-			JButton changeButton = new JButton("Left");
-			changeButton.setFont(normalFont);
-			changeButton.addActionListener(new MoveActionListener(frame, model));
-			innerPanel.add(changeButton, gbc);
-
-			gbc.gridwidth = 2;
-			gbc.gridx = 0;
-			gbc.gridy++;
-			startButton = new JButton("Right");
-			startButton.setFont(normalFont);
-			startButton.addActionListener(new MoveActionListener(frame, model));
-			innerPanel.add(startButton, gbc);
+//			gbc.gridwidth = 2;
+//			gbc.gridx = 0;
+//			gbc.gridy++;
+//			JButton changeButton = new JButton("Left");
+//			changeButton.setFont(normalFont);
+//			changeButton.addActionListener(new MoveActionListener(frame, model));
+//			innerPanel.add(changeButton, gbc);
+//
+//			gbc.gridwidth = 2;
+//			gbc.gridx = 0;
+//			gbc.gridy++;
+//			startButton = new JButton("Right");
+//			startButton.setFont(normalFont);
+//			startButton.addActionListener(new MoveActionListener(frame, model));
+//			innerPanel.add(startButton, gbc);
 
         /**
          * 5
          */
-//        gbc.gridwidth = 2;
-//        gbc.gridx = 0;
-//        gbc.gridy++;
-//        JButton changeButton = new JButton("Up");
-//        changeButton.setFont(normalFont);
-//        changeButton.addActionListener(new ChangeSizeActionListener(frame, model));
-//        innerPanel.add(changeButton, gbc);
-//
-//        gbc.gridwidth = 2;
-//        gbc.gridx = 0;
-//        gbc.gridy++;
-//        startButton = new JButton("Down");
-//        startButton.setFont(normalFont);
-//        startButton.addActionListener(new ChangeSizeActionListener(frame, model));
-//        innerPanel.add(startButton, gbc);
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        JButton changeButton = new JButton("Up");
+        changeButton.setFont(normalFont);
+        changeButton.addActionListener(new ChangeSizeActionListener(frame, model));
+        innerPanel.add(changeButton, gbc);
+
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        startButton = new JButton("Down");
+        startButton.setFont(normalFont);
+        startButton.addActionListener(new ChangeSizeActionListener(frame, model));
+        innerPanel.add(startButton, gbc);
 
     }
 

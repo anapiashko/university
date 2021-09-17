@@ -22,7 +22,7 @@ public class DrawingPanel extends JPanel {
     /**
      * 5
      */
-    public static int y; //150
+    public static int y = 150; //150
 
     private ColumnModel model;
 
@@ -32,7 +32,7 @@ public class DrawingPanel extends JPanel {
         this.height = model.getLights().length * width;
         MAX_RADIUS = width * 9 / 20;
         MIN_RADIUS = width * 3 / 20;
-        this.radius = MAX_RADIUS;
+        this.radius = MIN_RADIUS;
         //this.radius = MIN_RADIUS;
         this.margin = width / 10;
 
@@ -47,23 +47,6 @@ public class DrawingPanel extends JPanel {
     /**
      * 5
      */
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.setStroke(new BasicStroke(5f));
-//
-//
-//        //x = getWidth() / 2;
-//        int yStart = width / 2 + margin;
-//        int index = 0;
-//        int diameter = radius + radius;
-//        //y = yStart;
-//        fillOval(g2d, index, x, y, diameter);
-//        drawOval(g2d, x, y, diameter);
-//    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -71,33 +54,50 @@ public class DrawingPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(5f));
 
-//        int x = getWidth() / 2;
+
+        //x = getWidth() / 2;
         int yStart = width / 2 + margin;
         int index = 0;
         int diameter = radius + radius;
-
-        for (int y = yStart; y <= height; y += width) {
-            Shape modelShape = model.getLights()[index].getShape();
-            switch (modelShape) {
-                case SQUARE: {
-                    fillSquare(g2d, index, x, y, diameter);
-                    drawSquare(g2d, x, y, diameter);
-                    break;
-                }
-                case TRIANGLE: {
-                    fillTriangle(g2d, index, x, y, diameter);
-                    drawTriangle(g2d, x, y, diameter);
-                    break;
-                }
-                default: {
-                    fillOval(g2d, index, x, y, diameter);
-                    drawOval(g2d, x, y, diameter);
-                    break;
-                }
-            }
-            index++;
-        }
+        //y = yStart;
+        fillOval(g2d, index, x, y, diameter);
+        drawOval(g2d, x, y, diameter);
     }
+
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.setStroke(new BasicStroke(5f));
+//
+////        int x = getWidth() / 2;
+//        int yStart = width / 2 + margin;
+//        int index = 0;
+//        int diameter = radius + radius;
+//
+//        for (int y = yStart; y <= height; y += width) {
+//            Shape modelShape = model.getLights()[index].getShape();
+//            switch (modelShape) {
+//                case SQUARE: {
+//                    fillSquare(g2d, index, x, y, diameter);
+//                    drawSquare(g2d, x, y, diameter);
+//                    break;
+//                }
+//                case TRIANGLE: {
+//                    fillTriangle(g2d, index, x, y, diameter);
+//                    drawTriangle(g2d, x, y, diameter);
+//                    break;
+//                }
+//                default: {
+//                    fillOval(g2d, index, x, y, diameter);
+//                    drawOval(g2d, x, y, diameter);
+//                    break;
+//                }
+//            }
+//            index++;
+//        }
+//    }
 
     private void drawOval(Graphics2D g2d, int x, int y, int diameter) {
         g2d.setColor(Color.BLACK);
