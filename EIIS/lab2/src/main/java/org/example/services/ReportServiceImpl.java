@@ -4,13 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.models.Report;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,42 +13,30 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ReportServiceImpl {
 
+    public static final String REGEX = "[ ,.;:\"'»\\-«()—!\\[\\]\n]+";
+
     private final ClassicReportServiceImpl classicReportService;
     private final KeyWordReportServiceImpl keyWordReportService;
 
     public Report getReport(String reportName) throws IOException {
 
-        File file = Files.walk(Paths.get("src/main/resources/"))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .filter(e -> e.getName().contains(reportName))
-                .findFirst().get();
+        FileReaderServiceImpl fileReaderService = new FileReaderServiceImpl(reportName);
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        StringBuilder wholeDataFromFile = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            wholeDataFromFile.append(line).append(" ");
-        }
+        String dataFromFile = fileReaderService.readDataFromFile();
+        List<String> paragraphs = fileReaderService.readFileByParagraphs();
 
-        String finalDataFromFile = wholeDataFromFile.toString()
-                .trim()
-                .replaceAll("\\s+", " ");
-
-        System.out.println("wholeDataFromFile ---->" + finalDataFromFile + "----->");
-
-        Set<String> keyWords = keyWordReportService.getKeyWords(finalDataFromFile);
+        Set<String> keyWords = keyWordReportService.getKeyWords(dataFromFile, paragraphs);
         Map<String, Integer> map = keyWordReportService.getCountWordsInFile();
-        Set<String> par = classicReportService.getParagraphs(file,finalDataFromFile,map);
+        Set<String> par = classicReportService.getParagraphs(paragraphs, dataFromFile, map);
 
         return Report.builder()
-                .name(file.getName())
+                .name(reportName)
                 .keyWords(keyWords)
                 .classicReport(par)
                 .build();
     }
 
-    public static boolean isNeeded(String word){
+    public static boolean isSensibleWord(String word) {
         return !word.equalsIgnoreCase("I")
                 && !word.equalsIgnoreCase("me")
                 && !word.equalsIgnoreCase("you")
@@ -85,6 +67,7 @@ public class ReportServiceImpl {
                 && !word.equalsIgnoreCase("whose")
                 && !word.equalsIgnoreCase("wow")
                 && !word.equalsIgnoreCase("no")
+                && !word.equalsIgnoreCase("not")
                 && !word.equalsIgnoreCase("yes")
                 && !word.equalsIgnoreCase("for")
                 && !word.equalsIgnoreCase("but")
@@ -93,7 +76,6 @@ public class ReportServiceImpl {
                 && !word.equalsIgnoreCase("all")
                 && !word.equalsIgnoreCase("on")
                 && !word.equalsIgnoreCase("in")
-                && !word.equalsIgnoreCase("near")
                 && !word.equalsIgnoreCase("into")
                 && !word.equalsIgnoreCase("onto")
                 && !word.equalsIgnoreCase("the")
