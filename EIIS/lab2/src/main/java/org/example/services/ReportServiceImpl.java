@@ -26,13 +26,13 @@ public class ReportServiceImpl {
         List<String> paragraphs = fileReaderService.readFileByParagraphs();
 
         Set<String> keyWords = keyWordReportService.getKeyWords(dataFromFile, paragraphs);
-        Map<String, Integer> map = keyWordReportService.getCountWordsInFile();
-        Set<String> par = classicReportService.getParagraphs(paragraphs, dataFromFile, map);
+        Map<String, Integer> countWords = keyWordReportService.getCountWordsInFile();
+        Set<String> sentences = classicReportService.getSentences(paragraphs, dataFromFile, countWords);
 
         return Report.builder()
                 .name(reportName)
                 .keyWords(keyWords)
-                .classicReport(par)
+                .classicReport(sentences)
                 .build();
     }
 

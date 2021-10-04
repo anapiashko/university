@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Service
 public class ClassicReportServiceImpl {
 
-    public Set<String> getParagraphs(List<String> paragraphs, String finalDataFromFile, Map<String, Integer> allWordsWithCount) throws IOException {
+    public Set<String> getSentences(List<String> paragraphs, String finalDataFromFile, Map<String, Integer> allWordsWithCount) throws IOException {
 
         Map<String, Integer> sentenceList = new HashMap<>();
         List<String> sentences = Arrays.stream(finalDataFromFile.split("[.!?]"))
