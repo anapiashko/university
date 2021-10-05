@@ -1,3 +1,5 @@
+package text.editor;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -6,6 +8,8 @@ import java.io.*;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 
 public class TextEditor extends JFrame {
+
+    private static final String APP_PATH = "/home/anastasiya/university/CCP/lab2_3";
 
     private JTextArea textArea;
     private boolean isSaved = false;
@@ -112,7 +116,7 @@ public class TextEditor extends JFrame {
     }
 
     private void openFile() {
-        JFileChooser jFileChooser = new JFileChooser("/home/anastasiya/university/CCP/lab2_3");
+        JFileChooser jFileChooser = new JFileChooser(APP_PATH);
         // add filters
         FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
         jFileChooser.addChoosableFileFilter(xmlFilter);
@@ -122,7 +126,7 @@ public class TextEditor extends JFrame {
         if (r == JFileChooser.APPROVE_OPTION) {
             currentFileLocation = jFileChooser.getSelectedFile().getAbsolutePath();
             this.setTitle(currentFileLocation);
-            File file = new File(jFileChooser.getSelectedFile().getAbsolutePath());
+            File file = new File(currentFileLocation);
             try {
                 String s1 = "", sl = "";
                 FileReader fileReader = new FileReader(file);
@@ -143,7 +147,7 @@ public class TextEditor extends JFrame {
     }
 
     private void saveAs() {
-        JFileChooser jFileChooser = new JFileChooser("/home/anastasiya/university/CCP/lab2_3");
+        JFileChooser jFileChooser = new JFileChooser(APP_PATH);
 
         // add filters
         FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
