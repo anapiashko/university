@@ -1,10 +1,7 @@
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.*;
 
 import static javax.swing.GroupLayout.Alignment.CENTER;
 
@@ -12,6 +9,7 @@ public class TextEditor extends JFrame {
 
     private JTextArea textArea;
     private boolean isSaved = false;
+    private String currentFileLocation = "default";
 
     public static void main(String[] args) {
         new TextEditor();
@@ -24,19 +22,32 @@ public class TextEditor extends JFrame {
         JMenuItem newFileMenuItem = new JMenuItem("New");
         JMenuItem openFileMenuItem = new JMenuItem("Open");
         JMenuItem saveFileMenuItem = new JMenuItem("Save");
+        JMenuItem saveAsFileMenuItem = new JMenuItem("Save As");
+
         newFileMenuItem.addActionListener((e) -> {
-            new TextEditor();
+            setTitle("New Document");
+            textArea.setText("");
+            isSaved = false;
         });
         openFileMenuItem.addActionListener((e) -> {
             this.isSaved = true;
             openFile();
         });
         saveFileMenuItem.addActionListener((e) -> {
-            saveFile();
+            if (isSaved) {
+                save();
+            } else {
+                saveAs();
+            }
         });
+        saveAsFileMenuItem.addActionListener((e) -> {
+            saveAs();
+        });
+
         fileMenu.add(newFileMenuItem);
         fileMenu.add(openFileMenuItem);
         fileMenu.add(saveFileMenuItem);
+        fileMenu.add(saveAsFileMenuItem);
 
         JMenu editMenu = new JMenu("Edit");
         JMenuItem cutEditMenuItem = new JMenuItem("Cut");
@@ -76,10 +87,11 @@ public class TextEditor extends JFrame {
 
         JMenuItem closeMenu = new JMenuItem("Close");
         closeMenu.addActionListener(e -> {
-            if (isSaved || textArea.getText().equals(""))
+            if (isSaved || textArea.getText().equals("")) {
                 System.exit(0);
-            else
-                saveFile();
+            } else {
+                saveAs();
+            }
         });
 
         menuBar.add(fileMenu);
@@ -91,7 +103,7 @@ public class TextEditor extends JFrame {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         setJMenuBar(menuBar);
-        setTitle("Text Editor");
+        setTitle("New Document");
         add(textArea);
         setSize(500, 500);
         setLocationRelativeTo(null);
@@ -101,8 +113,15 @@ public class TextEditor extends JFrame {
 
     private void openFile() {
         JFileChooser jFileChooser = new JFileChooser("/home/anastasiya/university/CCP/lab2_3");
+        // add filters
+        FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
+        jFileChooser.addChoosableFileFilter(xmlFilter);
+        jFileChooser.setFileFilter(xmlFilter);
+
         int r = jFileChooser.showOpenDialog(null);
         if (r == JFileChooser.APPROVE_OPTION) {
+            currentFileLocation = jFileChooser.getSelectedFile().getAbsolutePath();
+            this.setTitle(currentFileLocation);
             File file = new File(jFileChooser.getSelectedFile().getAbsolutePath());
             try {
                 String s1 = "", sl = "";
@@ -123,24 +142,30 @@ public class TextEditor extends JFrame {
         }
     }
 
-    private void saveFile() {
+    private void saveAs() {
         JFileChooser jFileChooser = new JFileChooser("/home/anastasiya/university/CCP/lab2_3");
-        int r = jFileChooser.showOpenDialog(null);
+
+        // add filters
+        FileNameExtensionFilter xmlFilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
+        jFileChooser.addChoosableFileFilter(xmlFilter);
+        jFileChooser.setFileFilter(xmlFilter);
+
+        int r = jFileChooser.showSaveDialog(null);
         if (r == JFileChooser.APPROVE_OPTION) {
-            File file = new File(jFileChooser.getSelectedFile().getAbsolutePath());
+
+            currentFileLocation = jFileChooser.getSelectedFile().getAbsolutePath();
+            if (!currentFileLocation.endsWith(".xml")) {
+                currentFileLocation += ".xml";
+            }
+
+            this.setTitle(currentFileLocation);
+            File fi = new File(currentFileLocation);
             try {
-                String s1 = "", sl = "";
-                FileReader fileReader = new FileReader(file);
-                BufferedReader br = new BufferedReader(fileReader);
-                sl = br.readLine();
-                s1 = br.readLine();
-                while (s1 != null) {
-                    System.out.println(sl);
-                    sl = sl + "\n" + s1;
-                    s1 = br.readLine();
-                }
-                br.close();
-                textArea.setText(sl);
+                FileWriter wr = new FileWriter(fi, false);
+                BufferedWriter w = new BufferedWriter(wr);
+                w.write(textArea.getText());
+                w.flush();
+                w.close();
                 this.isSaved = true;
             } catch (Exception evt) {
                 JOptionPane.showMessageDialog(this, evt.getMessage());
@@ -148,10 +173,23 @@ public class TextEditor extends JFrame {
         }
     }
 
+    private void save() {
+        File fi = new File(currentFileLocation);
+        try {
+            FileWriter wr = new FileWriter(fi, false);
+            BufferedWriter w = new BufferedWriter(wr);
+            w.write(textArea.getText());
+            w.flush();
+            w.close();
+            this.isSaved = true;
+        } catch (Exception evt) {
+            JOptionPane.showMessageDialog(this, evt.getMessage());
+        }
+    }
+
     class AboutDialog extends JDialog {
 
-        JComboBox fontBox;
-        Font font;
+        private JComboBox fontBox;
 
         public AboutDialog(Frame parent) {
             super(parent);
@@ -164,7 +202,7 @@ public class TextEditor extends JFrame {
 
             fontBox = new JComboBox(fonts);
             fontBox.addActionListener(e -> {
-                    textArea.setFont(new Font((String) fontBox.getSelectedItem(), Font.PLAIN, textArea.getFont().getSize()));
+                textArea.setFont(new Font((String) fontBox.getSelectedItem(), Font.PLAIN, textArea.getFont().getSize()));
             });
             fontBox.setSelectedItem("Arial");
 
@@ -174,7 +212,7 @@ public class TextEditor extends JFrame {
                 dispose();
             });
 
-            createLayout(fontBox,okBtn);
+            createLayout(fontBox, okBtn);
 
             setModalityType(ModalityType.APPLICATION_MODAL);
 
@@ -193,20 +231,20 @@ public class TextEditor extends JFrame {
             gl.setAutoCreateGaps(true);
 
             gl.setHorizontalGroup(gl.createParallelGroup(CENTER)
-                    .addComponent(arg[0])
-                    .addComponent(arg[1])
+                            .addComponent(arg[0])
+                            .addComponent(arg[1])
 //                    .addComponent(arg[2])
-                    .addGap(200)
+                            .addGap(200)
             );
 
             gl.setVerticalGroup(gl.createSequentialGroup()
-                    .addGap(30)
-                    .addComponent(arg[0])
-                    .addGap(20)
-                    .addComponent(arg[1])
-                    .addGap(20)
+                            .addGap(30)
+                            .addComponent(arg[0])
+                            .addGap(20)
+                            .addComponent(arg[1])
+                            .addGap(20)
 //                    .addComponent(arg[2])
-                    .addGap(30)
+                            .addGap(30)
             );
 
             pack();
