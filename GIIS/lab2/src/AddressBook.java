@@ -16,72 +16,79 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AddressBook extends JFrame {
+
+    final Color BACKGROUND_COLOR = new Color(75, 75, 75);
+    final Color BUTTON_COLOR = new Color(105, 105, 105);
+
     ArrayList<User> userBook;
     Integer currentIndex = 0;
     Integer mode = null;
-    JLabel name = new JLabel("Name:");
-    JLabel address = new JLabel("Address:");
-    JButton add = new JButton("Add");
-    JButton edit = new JButton("Edit");
-    JButton remove = new JButton("Remove");
-    JButton find = new JButton("Find");
-    JButton load = new JButton("Load...");
-    JButton save = new JButton("Save...");
-    JButton export = new JButton("Export");
-    JButton next = new JButton("Next");
-    JButton previous = new JButton("Previous");
-    JButton submit = new JButton("Submit");
-    JButton cancel = new JButton("Cancel");
-    JTextField nameField = new JTextField(16);
-    JTextArea addressField = new JTextArea(1, 16);
+    JLabel nameLabel = new JLabel("Name:");
+    JLabel addressLabel = new JLabel("Address:");
+    JButton addButton = new JButton("Add");
+    JButton editButton = new JButton("Edit");
+    JButton removeButton = new JButton("Remove");
+    JButton findButton = new JButton("Find");
+    JButton loadButton = new JButton("Load...");
+    JButton saveButton = new JButton("Save...");
+    JButton exportButton = new JButton("Export");
+    JButton nextButton = new JButton("Next");
+    JButton previousButton = new JButton("Previous");
+    JButton submitButton = new JButton("Submit");
+    JButton cancelButton = new JButton("Cancel");
+    JTextField nameTextField = new JTextField(16);
+    JTextArea addressTextArea = new JTextArea(1, 16);
     GridBagConstraints gbc = new GridBagConstraints();
 
     public AddressBook() {
         JPanel p = new JPanel();
+//        p.setBackground(BACKGROUND_COLOR);
         p.setLayout(new GridBagLayout());
         userBook = new ArrayList<>();
-        addressField.setLineWrap(true);
-        addressField.setWrapStyleWord(true);
-        addressField.setEnabled(false);
-        nameField.setEnabled(false);
-        add.addActionListener(e -> {
-            nameField.setEnabled(true);
-            addressField.setEnabled(true);
-            nameField.setText("");
-            addressField.setText("");
+        addressTextArea.setLineWrap(true);
+        addressTextArea.setWrapStyleWord(true);
+        addressTextArea.setEnabled(false);
+        nameTextField.setEnabled(false);
+//        this.addButtonColor();
+        addButton.addActionListener(e -> {
+            nameTextField.setEnabled(true);
+            addressTextArea.setEnabled(true);
+            nameTextField.setText("");
+            addressTextArea.setText("");
             mode = 0;
-            add.setEnabled(false);
-            edit.setVisible(false);
-            remove.setVisible(false);
-            find.setVisible(false);
-            load.setVisible(false);
-            save.setVisible(false);
-            export.setVisible(false);
-            next.setEnabled(false);
-            previous.setEnabled(false);
-            func(p, submit, 5, 5, 1, 1, true);
-            submit.setVisible(true);
-            func(p, cancel, 5, 6, 1, 1, true);
-            cancel.setVisible(true);
+            addButton.setEnabled(false);
+            editButton.setVisible(false);
+            removeButton.setVisible(false);
+            findButton.setVisible(false);
+            loadButton.setVisible(false);
+            saveButton.setVisible(false);
+            exportButton.setVisible(false);
+            nextButton.setEnabled(false);
+            previousButton.setEnabled(false);
+            layout(p, submitButton, 5, 5, 1, 1, true);
+            submitButton.setVisible(true);
+            layout(p, cancelButton, 5, 6, 1, 1, true);
+            cancelButton.setVisible(true);
         });
-        submit.addActionListener(e -> {
-            if (nameField.getText().isEmpty() || addressField.getText().isEmpty()) {
+
+        submitButton.addActionListener(e -> {
+            if (nameTextField.getText().isEmpty() || addressTextArea.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(AddressBook.this, "Please enter a name and address.",
                         "Error", JOptionPane.OK_OPTION);
                 return;
             }
-            if (mode.equals(0) || (!mode.equals(1) && userBook.get(currentIndex).getName() != nameField.getText()))
+            if (mode.equals(0) || (!mode.equals(1) && userBook.get(currentIndex).getName() != nameTextField.getText()))
                 if (userBook.stream()
-                        .filter(t -> t.getName().equals(nameField.getText()))
+                        .filter(t -> t.getName().equals(nameTextField.getText()))
                         .collect(Collectors.toCollection(ArrayList::new)).size() != 0) {
-                    JOptionPane.showMessageDialog(AddressBook.this, "Sorry, " + nameField.getText() + " is already in your address book",
+                    JOptionPane.showMessageDialog(AddressBook.this, "Sorry, " + nameTextField.getText() + " is already in your address book",
                             "Error", JOptionPane.OK_OPTION);
                     return;
                 }
             if (mode == 0)
-                addNote(nameField.getText(), addressField.getText());
+                addNote(nameTextField.getText(), addressTextArea.getText());
             else
-                editNote(currentIndex, nameField.getText(), addressField.getText());
+                editNote(currentIndex, nameTextField.getText(), addressTextArea.getText());
             if (mode == 0)
                 JOptionPane.showMessageDialog(AddressBook.this, "Adding success");
             else
@@ -89,84 +96,86 @@ public class AddressBook extends JFrame {
             activeButtons();
         });
 
-        cancel.addActionListener(e -> {
+        cancelButton.addActionListener(e -> {
             if (userBook.size() > 0) {
-                nameField.setText(userBook.get(currentIndex).getName());
-                addressField.setText(userBook.get(currentIndex).getAddress());
+                nameTextField.setText(userBook.get(currentIndex).getName());
+                addressTextArea.setText(userBook.get(currentIndex).getAddress());
             }
-            if (mode == 0)
-                JOptionPane.showMessageDialog(AddressBook.this, "Adding cancel");
-            else
-                JOptionPane.showMessageDialog(AddressBook.this, "Edit cancel");
-            if (userBook.size() > 0)
+            if (mode == 0) {
+//                JOptionPane.showMessageDialog(AddressBook.this, "Adding cancel");
+            } else {
+//                JOptionPane.showMessageDialog(AddressBook.this, "Edit cancel");
+            }
+            if (userBook.size() > 0) {
                 activeButtons();
-            else {
-                add.setEnabled(true);
-                edit.setEnabled(false);
-                remove.setEnabled(false);
-                find.setEnabled(false);
-                save.setEnabled(false);
-                export.setEnabled(false);
-                next.setEnabled(false);
-                previous.setEnabled(false);
+            } else {
+                addButton.setEnabled(true);
+                editButton.setEnabled(false);
+                removeButton.setEnabled(false);
+                findButton.setEnabled(false);
+                saveButton.setEnabled(false);
+                exportButton.setEnabled(false);
+                nextButton.setEnabled(false);
+                previousButton.setEnabled(false);
 
-                edit.setVisible(true);
-                remove.setVisible(true);
-                find.setVisible(true);
-                load.setVisible(true);
-                save.setVisible(true);
-                export.setVisible(true);
-                next.setVisible(true);
-                previous.setVisible(true);
-                submit.setVisible(false);
+                editButton.setVisible(true);
+                removeButton.setVisible(true);
+                findButton.setVisible(true);
+                loadButton.setVisible(true);
+                saveButton.setVisible(true);
+                exportButton.setVisible(true);
+                nextButton.setVisible(true);
+                previousButton.setVisible(true);
+                submitButton.setVisible(false);
 
-                cancel.setVisible(false);
-                nameField.setEnabled(false);
-                addressField.setEnabled(false);
+                cancelButton.setVisible(false);
+                nameTextField.setEnabled(false);
+                addressTextArea.setEnabled(false);
             }
         });
 
-        next.addActionListener(e -> {
+        nextButton.addActionListener(e -> {
             currentIndex = currentIndex + 1 != userBook.size() ? currentIndex + 1 : 0;
             User current = userBook.get(currentIndex);
-            nameField.setText(current.getName());
-            addressField.setText(current.getAddress());
+            nameTextField.setText(current.getName());
+            addressTextArea.setText(current.getAddress());
         });
 
-        previous.addActionListener(e -> {
+        previousButton.addActionListener(e -> {
             currentIndex = (currentIndex - 1) >= 0 ? currentIndex - 1 : userBook.size() - 1;
             User current = userBook.get(currentIndex);
-            nameField.setText(current.getName());
-            addressField.setText(current.getAddress());
+            nameTextField.setText(current.getName());
+            addressTextArea.setText(current.getAddress());
         });
 
-        edit.addActionListener(e -> {
-            nameField.setEnabled(true);
-            addressField.setEnabled(true);
+        editButton.addActionListener(e -> {
+            nameTextField.setEnabled(true);
+            addressTextArea.setEnabled(true);
             mode = 1;
-            add.setVisible(false);
-            edit.setEnabled(false);
-            remove.setVisible(false);
-            find.setVisible(false);
-            load.setVisible(false);
-            save.setVisible(false);
-            export.setVisible(false);
-            next.setEnabled(false);
-            previous.setEnabled(false);
-            func(p, submit, 5, 5, 1, 1, true);
-            submit.setVisible(true);
-            func(p, cancel, 5, 6, 1, 1, true);
-            cancel.setVisible(true);
+            addButton.setVisible(false);
+            editButton.setEnabled(false);
+            removeButton.setVisible(false);
+            findButton.setVisible(false);
+            loadButton.setVisible(false);
+            saveButton.setVisible(false);
+            exportButton.setVisible(false);
+            nextButton.setEnabled(false);
+            previousButton.setEnabled(false);
+            layout(p, submitButton, 5, 5, 1, 1, true);
+            submitButton.setVisible(true);
+            layout(p, cancelButton, 5, 6, 1, 1, true);
+            cancelButton.setVisible(true);
         });
 
-        remove.addActionListener(e -> {
+        removeButton.addActionListener(e -> {
             int res = JOptionPane.showConfirmDialog(AddressBook.this, "Are you sure?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (res == JOptionPane.YES_OPTION)
                 removeNote(currentIndex);
         });
 
-        find.addActionListener((ActionEvent e) -> {
+        findButton.addActionListener((ActionEvent e) -> {
             JFrame j = new JFrame();
+            j.setLocationRelativeTo(null);
             JPanel pa = new JPanel();
             pa.setLayout(new FlowLayout());
             JLabel l = new JLabel("Enter the name of a contact:");
@@ -179,8 +188,8 @@ public class AddressBook extends JFrame {
                             "", JOptionPane.OK_OPTION);
                 else {
                     currentIndex = indexFind;
-                    nameField.setText(userBook.get(indexFind).getName());
-                    addressField.setText(userBook.get(indexFind).getAddress());
+                    nameTextField.setText(userBook.get(indexFind).getName());
+                    addressTextArea.setText(userBook.get(indexFind).getAddress());
                 }
                 AddressBook.this.setEnabled(true);
                 j.setVisible(false);
@@ -204,7 +213,7 @@ public class AddressBook extends JFrame {
             setEnabled(false);
         });
 
-        export.addActionListener((e -> {
+        exportButton.addActionListener((e -> {
             JFileChooser c = new JFileChooser();
             c.addChoosableFileFilter(new FileNameExtensionFilter("vCard Files", "vcf"));
 
@@ -216,23 +225,23 @@ public class AddressBook extends JFrame {
                 exportAddress(c.getSelectedFile().toString() + temp);
                 JOptionPane.showMessageDialog(AddressBook.this, "Export success");
             }
-            if (rVal == JFileChooser.CANCEL_OPTION)
-                JOptionPane.showMessageDialog(AddressBook.this, "Export cancel",
-                        "", JOptionPane.OK_OPTION);
+//            if (rVal == JFileChooser.CANCEL_OPTION)
+//                JOptionPane.showMessageDialog(AddressBook.this, "Export cancel",
+//                        "", JOptionPane.OK_OPTION);
         }));
-        load.addActionListener(e -> {
+        loadButton.addActionListener(e -> {
             JFileChooser c = new JFileChooser();
             int rVal = c.showOpenDialog(AddressBook.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
                 JOptionPane.showMessageDialog(AddressBook.this, "Load success");
                 loadAddressBook(c.getSelectedFile().toString());
             }
-            if (rVal == JFileChooser.CANCEL_OPTION)
-                JOptionPane.showMessageDialog(AddressBook.this, "Load cancel",
-                        "", JOptionPane.OK_OPTION);
+//            if (rVal == JFileChooser.CANCEL_OPTION)
+//                JOptionPane.showMessageDialog(AddressBook.this, "Load cancel",
+//                        "", JOptionPane.OK_OPTION);
         });
 
-        save.addActionListener(e -> {
+        saveButton.addActionListener(e -> {
             JFileChooser c = new JFileChooser();
             c.addChoosableFileFilter(new FileNameExtensionFilter("Text document", "txt"));
 
@@ -244,77 +253,91 @@ public class AddressBook extends JFrame {
                 saveAddressBook(c.getSelectedFile().toString() + temp);
                 JOptionPane.showMessageDialog(AddressBook.this, "Save success");
             }
-            if (rVal == JFileChooser.CANCEL_OPTION)
-                JOptionPane.showMessageDialog(AddressBook.this, "Save cancel",
-                        "Error", JOptionPane.OK_OPTION);
+//            if (rVal == JFileChooser.CANCEL_OPTION)
+//                JOptionPane.showMessageDialog(AddressBook.this, "Save cancel",
+//                        "Error", JOptionPane.OK_OPTION);
         });
 
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.NORTH;
-        func(p, name, 0, 0, 1, 1, true);
-        func(p, nameField, 1, 0, 4, 1, true);
-        func(p, address, 0, 1, 1, 1, true);
-        func(p, addressField, 1, 1, 4, 9, false);
+        layout(p, nameLabel, 0, 0, 1, 1, true);
+        layout(p, nameTextField, 1, 0, 4, 1, true);
+        layout(p, addressLabel, 0, 1, 1, 1, true);
+        layout(p, addressTextArea, 1, 1, 4, 9, false);
         gbc.anchor = GridBagConstraints.CENTER;
-        func(p, add, 5, 1, 1, 1, true);
-        func(p, edit, 5, 2, 1, 1, true);
-        func(p, remove, 5, 3, 1, 1, true);
-        func(p, find, 5, 4, 1, 1, true);
-        func(p, load, 5, 5, 1, 1, true);
-        func(p, save, 5, 6, 1, 1, true);
-        func(p, export, 5, 7, 1, 1, true);
-        func(p, new JLabel(" "), 0, 2, 1, 1, true);
-        func(p, new JLabel(" "), 0, 3, 1, 1, true);
-        func(p, new JLabel(" "), 0, 4, 1, 1, true);
-        func(p, new JLabel(" "), 0, 5, 1, 1, true);
-        func(p, new JLabel(" "), 0, 6, 1, 1, true);
-        func(p, new JLabel(" "), 0, 7, 1, 1, true);
-        func(p, new JLabel(" "), 0, 8, 1, 1, true);
-        func(p, new JLabel(" "), 0, 9, 1, 1, true);
-        func(p, previous, 1, 10, 2, 1, true);
-        func(p, next, 3, 10, 2, 1, true);
+        layout(p, addButton, 5, 1, 1, 1, true);
+        layout(p, editButton, 5, 2, 1, 1, true);
+        layout(p, removeButton, 5, 3, 1, 1, true);
+        layout(p, findButton, 5, 4, 1, 1, true);
+        layout(p, loadButton, 5, 5, 1, 1, true);
+        layout(p, saveButton, 5, 6, 1, 1, true);
+        layout(p, exportButton, 5, 7, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 2, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 3, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 4, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 5, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 6, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 7, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 8, 1, 1, true);
+        layout(p, new JLabel(" "), 0, 9, 1, 1, true);
+        layout(p, previousButton, 1, 10, 2, 1, true);
+        layout(p, nextButton, 3, 10, 2, 1, true);
 
-        edit.setEnabled(false);
-        remove.setEnabled(false);
-        find.setEnabled(false);
-        save.setEnabled(false);
-        export.setEnabled(false);
-        next.setEnabled(false);
-        previous.setEnabled(false);
+        editButton.setEnabled(false);
+        removeButton.setEnabled(false);
+        findButton.setEnabled(false);
+        saveButton.setEnabled(false);
+        exportButton.setEnabled(false);
+        nextButton.setEnabled(false);
+        previousButton.setEnabled(false);
         add(p);
     }
 
     public void activeButtons() {
         if (mode == 0) {
-            add.setEnabled(true);
-            edit.setEnabled(true);
-            edit.setVisible(true);
+            addButton.setEnabled(true);
+            editButton.setEnabled(true);
+            editButton.setVisible(true);
         } else {
-            edit.setEnabled(true);
-            add.setEnabled(true);
-            add.setVisible(true);
+            editButton.setEnabled(true);
+            addButton.setEnabled(true);
+            addButton.setVisible(true);
         }
-        remove.setVisible(true);
-        remove.setEnabled(true);
-        find.setEnabled(true);
-        load.setEnabled(true);
-        save.setEnabled(true);
-        export.setEnabled(true);
-        find.setVisible(true);
-        load.setVisible(true);
-        save.setVisible(true);
-        export.setVisible(true);
-        next.setEnabled(true);
-        previous.setEnabled(true);
+        removeButton.setVisible(true);
+        removeButton.setEnabled(true);
+        findButton.setEnabled(true);
+        loadButton.setEnabled(true);
+        saveButton.setEnabled(true);
+        exportButton.setEnabled(true);
+        findButton.setVisible(true);
+        loadButton.setVisible(true);
+        saveButton.setVisible(true);
+        exportButton.setVisible(true);
+        nextButton.setEnabled(true);
+        previousButton.setEnabled(true);
 
-        submit.setVisible(false);
-        cancel.setVisible(false);
+        submitButton.setVisible(false);
+        cancelButton.setVisible(false);
 
-        nameField.setEnabled(false);
-        addressField.setEnabled(false);
+        nameTextField.setEnabled(false);
+        addressTextArea.setEnabled(false);
     }
 
-    public void func(JPanel p, JComponent c, Integer x, Integer y, Integer w, Integer h, boolean b) {
+//    private void addButtonColor() {
+//        addButton.setBackground(BUTTON_COLOR);
+//        editButton.setBackground(BUTTON_COLOR);
+//        removeButton.setBackground(BUTTON_COLOR);
+//        findButton.setBackground(BUTTON_COLOR);
+//        loadButton.setBackground(BUTTON_COLOR);
+//        saveButton.setBackground(BUTTON_COLOR);
+//        exportButton.setBackground(BUTTON_COLOR);
+//        nextButton.setBackground(BUTTON_COLOR);
+//        previousButton.setBackground(BUTTON_COLOR);
+//        submitButton.setBackground(BUTTON_COLOR);
+//        cancelButton.setBackground(BUTTON_COLOR);
+//    }
+
+    public void layout(JPanel p, JComponent c, Integer x, Integer y, Integer w, Integer h, boolean b) {
         gbc.gridx = x;
         gbc.gridy = y;
         gbc.gridwidth = w;
@@ -335,22 +358,22 @@ public class AddressBook extends JFrame {
     public void removeNote(int index) {
         userBook.remove(index);
         if (index != userBook.size()) {
-            nameField.setText(userBook.get(index).getName());
-            addressField.setText(userBook.get(index).getName());
+            nameTextField.setText(userBook.get(index).getName());
+            addressTextArea.setText(userBook.get(index).getName());
         } else if (index - 1 < 0) {
-            remove.setEnabled(false);
-            edit.setEnabled(false);
-            find.setEnabled(false);
-            save.setEnabled(false);
-            export.setEnabled(false);
-            next.setEnabled(false);
-            previous.setEnabled(false);
-            nameField.setText("");
-            addressField.setText("");
+            removeButton.setEnabled(false);
+            editButton.setEnabled(false);
+            findButton.setEnabled(false);
+            saveButton.setEnabled(false);
+            exportButton.setEnabled(false);
+            nextButton.setEnabled(false);
+            previousButton.setEnabled(false);
+            nameTextField.setText("");
+            addressTextArea.setText("");
         } else {
             currentIndex -= 1;
-            nameField.setText(userBook.get(index - 1).getName());
-            addressField.setText(userBook.get(index - 1).getName());
+            nameTextField.setText(userBook.get(index - 1).getName());
+            addressTextArea.setText(userBook.get(index - 1).getName());
         }
 
     }
@@ -373,16 +396,16 @@ public class AddressBook extends JFrame {
             e.printStackTrace();
         }
         if (userBook.size() > 0) {
-            edit.setEnabled(true);
-            remove.setEnabled(true);
-            find.setEnabled(true);
-            save.setEnabled(true);
-            export.setEnabled(true);
-            next.setEnabled(true);
-            previous.setEnabled(true);
+            editButton.setEnabled(true);
+            removeButton.setEnabled(true);
+            findButton.setEnabled(true);
+            saveButton.setEnabled(true);
+            exportButton.setEnabled(true);
+            nextButton.setEnabled(true);
+            previousButton.setEnabled(true);
             currentIndex = userBook.size() - 1;
-            nameField.setText(userBook.get(currentIndex).getName());
-            addressField.setText(userBook.get(currentIndex).getAddress());
+            nameTextField.setText(userBook.get(currentIndex).getName());
+            addressTextArea.setText(userBook.get(currentIndex).getAddress());
         }
     }
 
@@ -407,8 +430,8 @@ public class AddressBook extends JFrame {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write("BEGIN:VCARD\n");
                 writer.write("VERSION:2.1\n");
-                String name = nameField.getText();
-                String address = addressField.getText();
+                String name = nameTextField.getText();
+                String address = addressTextArea.getText();
                 String fname;
                 String sname;
                 ArrayList<String> listName;
