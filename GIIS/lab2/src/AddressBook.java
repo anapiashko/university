@@ -17,9 +17,6 @@ import java.util.stream.Stream;
 
 public class AddressBook extends JFrame {
 
-    final Color BACKGROUND_COLOR = new Color(75, 75, 75);
-    final Color BUTTON_COLOR = new Color(105, 105, 105);
-
     ArrayList<User> userBook;
     Integer currentIndex = 0;
     Integer mode = null;
@@ -42,14 +39,12 @@ public class AddressBook extends JFrame {
 
     public AddressBook() {
         JPanel p = new JPanel();
-//        p.setBackground(BACKGROUND_COLOR);
         p.setLayout(new GridBagLayout());
         userBook = new ArrayList<>();
         addressTextArea.setLineWrap(true);
         addressTextArea.setWrapStyleWord(true);
         addressTextArea.setEnabled(false);
         nameTextField.setEnabled(false);
-//        this.addButtonColor();
         addButton.addActionListener(e -> {
             nameTextField.setEnabled(true);
             addressTextArea.setEnabled(true);
@@ -102,9 +97,9 @@ public class AddressBook extends JFrame {
                 addressTextArea.setText(userBook.get(currentIndex).getAddress());
             }
             if (mode == 0) {
-//                JOptionPane.showMessageDialog(AddressBook.this, "Adding cancel");
+                JOptionPane.showMessageDialog(AddressBook.this, "Adding cancel");
             } else {
-//                JOptionPane.showMessageDialog(AddressBook.this, "Edit cancel");
+                JOptionPane.showMessageDialog(AddressBook.this, "Edit cancel");
             }
             if (userBook.size() > 0) {
                 activeButtons();
@@ -225,9 +220,9 @@ public class AddressBook extends JFrame {
                 exportAddress(c.getSelectedFile().toString() + temp);
                 JOptionPane.showMessageDialog(AddressBook.this, "Export success");
             }
-//            if (rVal == JFileChooser.CANCEL_OPTION)
-//                JOptionPane.showMessageDialog(AddressBook.this, "Export cancel",
-//                        "", JOptionPane.OK_OPTION);
+            if (rVal == JFileChooser.CANCEL_OPTION)
+                JOptionPane.showMessageDialog(AddressBook.this, "Export cancel",
+                        "", JOptionPane.OK_OPTION);
         }));
         loadButton.addActionListener(e -> {
             JFileChooser c = new JFileChooser();
@@ -236,9 +231,9 @@ public class AddressBook extends JFrame {
                 JOptionPane.showMessageDialog(AddressBook.this, "Load success");
                 loadAddressBook(c.getSelectedFile().toString());
             }
-//            if (rVal == JFileChooser.CANCEL_OPTION)
-//                JOptionPane.showMessageDialog(AddressBook.this, "Load cancel",
-//                        "", JOptionPane.OK_OPTION);
+            if (rVal == JFileChooser.CANCEL_OPTION)
+                JOptionPane.showMessageDialog(AddressBook.this, "Load cancel",
+                        "", JOptionPane.OK_OPTION);
         });
 
         saveButton.addActionListener(e -> {
@@ -253,9 +248,9 @@ public class AddressBook extends JFrame {
                 saveAddressBook(c.getSelectedFile().toString() + temp);
                 JOptionPane.showMessageDialog(AddressBook.this, "Save success");
             }
-//            if (rVal == JFileChooser.CANCEL_OPTION)
-//                JOptionPane.showMessageDialog(AddressBook.this, "Save cancel",
-//                        "Error", JOptionPane.OK_OPTION);
+            if (rVal == JFileChooser.CANCEL_OPTION)
+                JOptionPane.showMessageDialog(AddressBook.this, "Save cancel",
+                        "Error", JOptionPane.OK_OPTION);
         });
 
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -322,20 +317,6 @@ public class AddressBook extends JFrame {
         nameTextField.setEnabled(false);
         addressTextArea.setEnabled(false);
     }
-
-//    private void addButtonColor() {
-//        addButton.setBackground(BUTTON_COLOR);
-//        editButton.setBackground(BUTTON_COLOR);
-//        removeButton.setBackground(BUTTON_COLOR);
-//        findButton.setBackground(BUTTON_COLOR);
-//        loadButton.setBackground(BUTTON_COLOR);
-//        saveButton.setBackground(BUTTON_COLOR);
-//        exportButton.setBackground(BUTTON_COLOR);
-//        nextButton.setBackground(BUTTON_COLOR);
-//        previousButton.setBackground(BUTTON_COLOR);
-//        submitButton.setBackground(BUTTON_COLOR);
-//        cancelButton.setBackground(BUTTON_COLOR);
-//    }
 
     public void layout(JPanel p, JComponent c, Integer x, Integer y, Integer w, Integer h, boolean b) {
         gbc.gridx = x;
