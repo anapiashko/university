@@ -10,4 +10,8 @@ public class Basket {
     public void add(Commodity commodity) {
         listCommodity.add(commodity);
     }
+
+    public List<Commodity> getListCommodity(){
+        return this.listCommodity;
+    }
 }

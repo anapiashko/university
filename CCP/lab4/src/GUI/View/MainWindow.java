@@ -17,6 +17,8 @@ public class MainWindow extends JFrame {
     private TopUpMoneyFrame topUpMoneyFrame;
     private JButton buyCommodityButton;
     private JButton addToBasketButton;
+    private JButton findCommodityButton;
+    private JButton showBasketButton;
     private JButton topUpMoney;
     private JLabel moneyInPurseJLabel;
     private JPanel lowCommodityPanel;
@@ -43,14 +45,21 @@ public class MainWindow extends JFrame {
         return buyCommodityButton;
     }
 
-    public JComboBox getJComboBoxWithListCommodity() {
-        return listCommodityComboBox;
-    }
-
-    public JButton getJButtonCheckQuality() {
+    public JButton getJButtonAddToBasket() {
         return addToBasketButton;
     }
 
+    public JButton getJButtonFindCommodity () {
+        return findCommodityButton;
+    }
+
+    public JButton getJButtonShowBasket () {
+        return showBasketButton;
+    }
+
+    public JComboBox getJComboBoxWithListCommodity() {
+        return listCommodityComboBox;
+    }
 
     public void setJLabelWithAmountMoney(int newAmountMoney) {
         moneyInPurseJLabel.setText("Баланс кошелька: " + newAmountMoney);
@@ -64,6 +73,9 @@ public class MainWindow extends JFrame {
         listCommodityComboBox = createComboBox(listCommodity);
     }
 
+    public void setJComboBoxSelectedCommodity(Commodity commodity) {
+        listCommodityComboBox.getModel().setSelectedItem(commodity);
+    }
 
     public MainWindow(List<Commodity> listCommodity, int countMoneyInPurse) {
         setLayout(new GridLayout(1, 2, 15, 5));
@@ -132,8 +144,12 @@ public class MainWindow extends JFrame {
             setLayout(new FlowLayout(FlowLayout.CENTER));
             buyCommodityButton = new JButton("Купить товар");
             addToBasketButton = new JButton("Добавить в корзину");
-            add(buyCommodityButton);
+            findCommodityButton = new JButton("Найти товар");
+            showBasketButton = new JButton("Показать корзину");
+            add(findCommodityButton);
             add(addToBasketButton);
+            add(buyCommodityButton);
+            add(showBasketButton);
             setVisible(true);
         }
     }
