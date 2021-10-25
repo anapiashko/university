@@ -74,7 +74,7 @@ public class Shop {
         try {
             List<String> stringsWithCommodityInfo = new ArrayList<>();
 
-            try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\anapi\\Documents\\university\\CCP\\lab4\\src\\resources\\deliverCommodity.txt"))) {
+            try (BufferedReader br = new BufferedReader(new FileReader(".\\src\\resources\\itemList.txt"))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     stringsWithCommodityInfo.add(line);

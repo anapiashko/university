@@ -55,10 +55,6 @@ public class GUIControllerMainForm {
         JButton jButtonShowBasket = view.getJButtonShowBasket();
         jButtonShowBasket.addActionListener(new ListenerForButtonButtonShowBasket());
 
-        //добавляем обработчик событий для кнопки "купить товар"
-        JButton jButtonBuyCommodity = view.getButtonBuyCommodity();
-        jButtonBuyCommodity.addActionListener(new ListenerForButtonBuyCommodity());
-
     }
 
     class ListenerForButtonTopUpMoney implements ActionListener {
@@ -98,27 +94,6 @@ public class GUIControllerMainForm {
             }
         }
     }
-
-    class ListenerForButtonBuyCommodity implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int commoditySelectIndex = view.getJComboBoxWithListCommodity().getSelectedIndex();
-            if (commoditySelectIndex != -1) {
-                Commodity selectCommodity = shop.getListCommodity().get(commoditySelectIndex);
-                if (shop.buyCommodity(selectCommodity)) {
-                    view.getJComboBoxWithListCommodity().removeItemAt(commoditySelectIndex);
-                    view.setJLabelWithAmountMoney(shop.purse.getAmountMoney());
-                } else {
-                    JOptionPane.showMessageDialog(null, "На счёте недостаточно средств");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "В магазине закончились товары! Дождитесь " +
-                        "поступления новых!");
-            }
-        }
-    }
-
 
     class ListenerForButtonAddToBasket implements ActionListener {
         @Override

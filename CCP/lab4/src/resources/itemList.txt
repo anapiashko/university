@@ -1,0 +1,7 @@
+notebook 340
+flower 100
+pencil 50
+chair 1500
+pen 50
+book 150
+cream 70

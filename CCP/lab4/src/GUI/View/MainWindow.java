@@ -15,7 +15,6 @@ public class MainWindow extends JFrame {
     private final ImageIcon purseIcon = new ImageIcon("../pursePicture.png");
     private final Image shopIcon = new ImageIcon("../imageShop.png").getImage();
     private TopUpMoneyFrame topUpMoneyFrame;
-    private JButton buyCommodityButton;
     private JButton addToBasketButton;
     private JButton findCommodityButton;
     private JButton showBasketButton;
@@ -39,10 +38,6 @@ public class MainWindow extends JFrame {
 
     public JLabel getMoneyInPurseJLabel() {
         return moneyInPurseJLabel;
-    }
-
-    public JButton getButtonBuyCommodity() {
-        return buyCommodityButton;
     }
 
     public JButton getJButtonAddToBasket() {
@@ -142,13 +137,11 @@ public class MainWindow extends JFrame {
 
         public LowCommodityPanel() {
             setLayout(new FlowLayout(FlowLayout.CENTER));
-            buyCommodityButton = new JButton("Купить товар");
             addToBasketButton = new JButton("Добавить в корзину");
             findCommodityButton = new JButton("Найти товар");
             showBasketButton = new JButton("Показать корзину");
             add(findCommodityButton);
             add(addToBasketButton);
-            add(buyCommodityButton);
             add(showBasketButton);
             setVisible(true);
         }
