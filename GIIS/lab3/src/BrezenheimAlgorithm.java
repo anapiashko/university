@@ -5,14 +5,14 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class DrawAlgorithm extends JFrame {
+public class BrezenheimAlgorithm extends JFrame {
+
     String mode;
     HashSet<Point> points = new HashSet<>();
     Point pointOffset = new Point(9, 38);
 
-    public DrawAlgorithm() {
-        setTitle("Draw");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public BrezenheimAlgorithm() {
+        setTitle("Brezenheim Algorithm");
         setSize(1000, 1000);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -24,6 +24,7 @@ public class DrawAlgorithm extends JFrame {
         add(drawField, BorderLayout.CENTER);
         ArrayList<Point> list = new ArrayList<>();
         drawField.addMouseListener(new MouseListener() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
 
@@ -58,6 +59,7 @@ public class DrawAlgorithm extends JFrame {
             }
 
         });
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(true);
         setVisible(true);
         pointOffset = new Point(pointOffset.x, pointOffset.y + submenu.getHeight());
@@ -85,22 +87,17 @@ public class DrawAlgorithm extends JFrame {
         });
         JRadioButton line = new JRadioButton("Line");
         mode = "line";
-        line.setEnabled(false);
         line.setSelected(true);
         JRadioButton circle = new JRadioButton("Circle");
         line.addActionListener(e -> {
             mode = "line";
             circle.setSelected(false);
-            circle.setEnabled(true);
             line.setSelected(true);
-            line.setEnabled(false);
         });
         circle.addActionListener(e -> {
             mode = "circle";
             line.setSelected(false);
-            line.setEnabled(true);
             circle.setSelected(true);
-            circle.setEnabled(false);
         });
 
         panel.add(clear);
@@ -111,42 +108,44 @@ public class DrawAlgorithm extends JFrame {
     }
 
     public void drawBrasenhamLine(Point start, Point end) {
-        int x, y, dx, dy, incx, incy, pdx, pdy, es, el, err;
-        dx = start.x - end.x;
-        dy = start.y - end.y;
-        incx = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
-        incy = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
-        if (dx < 0)
-            dx = Math.abs(dx);
-        if (dy < 0)
-            dy = Math.abs(dy);
+        int x, y, deltaX, deltaY, incX, incY, pdx, pdy, deltaErr, el, err;
 
-        if (dx > dy) {
-            pdx = incx;
+        deltaX = start.x - end.x;
+        deltaY = start.y - end.y;
+
+        incX = Integer.compare(deltaX, 0);
+        incY = Integer.compare(deltaY, 0);
+
+        deltaX = Math.abs(deltaX);
+
+        deltaY = Math.abs(deltaY);
+
+        if (deltaX > deltaY) {
+            pdx = incX;
             pdy = 0;
-            es = dy;
-            el = dx;
+            deltaErr = deltaY;
+            el = deltaX;
         } else {
             pdx = 0;
-            pdy = incy;
-            es = dx;
-            el = dy;
+            pdy = incY;
+            deltaErr = deltaX;
+            el = deltaY;
         }
         x = start.x;
         y = start.y;
         err = el / 2;
         points.add(new Point(x, y));
 
-        for (int t = 0; t < el; t++)//идём по всем точкам, начиная со второй и до последней
+        for (int t = 0; t < el; t++) //идём по всем точкам, начиная со второй и до последней
         {
-            err -= es;
+            err -= deltaErr;
             if (err < 0) {
                 err += el;
-                x -= incx;//сдвинуть прямую (сместить вверх или вниз, если цикл проходит по иксам)
-                y -= incy;//или сместить влево-вправо, если цикл проходит по y
+                x -= incX; //сдвинуть прямую (сместить вверх или вниз, если цикл проходит по иксам)
+                y -= incY; //или сместить влево-вправо, если цикл проходит по y
             } else {
-                x -= pdx;//продолжить тянуть прямую дальше, т.е. сдвинуть влево или вправо, если
-                y -= pdy;//цикл идёт по иксу; сдвинуть вверх или вниз, если по y
+                x -= pdx; //продолжить тянуть прямую дальше, т.е. сдвинуть влево или вправо, если
+                y -= pdy; //цикл идёт по иксу; сдвинуть вверх или вниз, если по y
             }
 
             points.add(new Point(x, y));
@@ -156,7 +155,7 @@ public class DrawAlgorithm extends JFrame {
 
 
     private void drawCircle(Point center, Point pointRadius) {
-        Integer radius = Math.round(new Float(Math.sqrt(Math.pow(center.x - pointRadius.x, 2) + Math.pow(center.y - pointRadius.y, 2))));
+        int radius = Math.round(new Float(Math.sqrt(Math.pow(center.x - pointRadius.x, 2) + Math.pow(center.y - pointRadius.y, 2))));
         int x = 0;
         int y = radius;
         int delta = 1 - 2 * radius;
@@ -170,6 +169,7 @@ public class DrawAlgorithm extends JFrame {
                 points.add(new Point(center.x - x, center.y + y));
             if (center.x - x > pointOffset.x && center.y - y > pointOffset.y)
                 points.add(new Point(center.x - x, center.y - y));
+
             error = 2 * (delta + y) - 1;
             if (delta < 0 && error <= 0) {
                 ++x;
@@ -191,6 +191,6 @@ public class DrawAlgorithm extends JFrame {
 
 
     public static void main(String[] args) {
-        new DrawAlgorithm();
+        new BrezenheimAlgorithm();
     }
 }
