@@ -74,7 +74,7 @@ public class BasketListFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String totalItemList = getTotalItemList();
-            JOptionPane.showMessageDialog(null, totalItemList);
+            JOptionPane.showMessageDialog(null, totalItemList, "Чек", 1);
         }
     }
 

@@ -16,7 +16,6 @@ public class GUIControllerMainForm {
 
     private Shop shop;
     private MainWindow view;
-    private ControllerTopUpMoneyFrame controllerTopUpMoney;
     private Basket basket = new Basket();
 
 
@@ -24,24 +23,15 @@ public class GUIControllerMainForm {
         return shop.getListCommodity();
     }
 
-    public int getCountMoneyInPurse() {
-        return shop.getPurse().getAmountMoney();
-    }
-
-
     public GUIControllerMainForm(Shop shop) {
         this.shop = shop;
     }
 
     public void execute() {
-        view = new MainWindow(getListCommodity(), getCountMoneyInPurse());
+        view = new MainWindow(getListCommodity());
 
         //размещаем форму по центру экрана
         view.setLocationRelativeTo(null);
-
-        //добавляем обрапботчик событий для кнопки "пополнить счёт"
-        JButton buttonTopUpMoneyFromMainView = view.getTopUpMoneyButton();
-        buttonTopUpMoneyFromMainView.addActionListener(new ListenerForButtonTopUpMoney());
 
         //добавляем обработчик событий для кнопки "найти товар"
         JButton jButtonFindCommodity = view.getJButtonFindCommodity();
@@ -55,14 +45,6 @@ public class GUIControllerMainForm {
         JButton jButtonShowBasket = view.getJButtonShowBasket();
         jButtonShowBasket.addActionListener(new ListenerForButtonButtonShowBasket());
 
-    }
-
-    class ListenerForButtonTopUpMoney implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            controllerTopUpMoney = new ControllerTopUpMoneyFrame(shop, view);
-            controllerTopUpMoney.execute();
-        }
     }
 
     class ListenerForButtonButtonShowBasket implements ActionListener {

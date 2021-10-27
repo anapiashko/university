@@ -1,7 +1,6 @@
 package GUI.Model;
 
 import Logic.Commodity;
-import Logic.Purse;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,20 +10,14 @@ import java.util.List;
 
 public class Shop {
 
-    public Purse purse;
     public List<Commodity> listCommodity = new ArrayList<Commodity>();
 
-    public Shop(Purse purse){
+    public Shop(){
         createCommodityList();
-        this.purse = purse;
     }
 
     public List<Commodity> getListCommodity(){
         return listCommodity;
-    }
-
-    public Purse getPurse() {
-        return purse;
     }
 
     /**
@@ -40,31 +33,6 @@ public class Shop {
     public void printCommodityInfo(Commodity commodity){
         System.out.println("----------------------------------------------------------------");
 //        product.canUse();
-    }
-
-    /**
-     * Удаляет товар переданный параметром, из списка товаров. Снимает со счёта цену товара.
-     * @param commodity - товар который будет удалён.
-     */
-    public boolean buyCommodity(Commodity commodity) {
-        boolean result;
-        if (commodity.getPrice() <= purse.getAmountMoney()) {
-            int removeIndex = -1;
-            for (int i = 0; i < listCommodity.size(); i++) {
-                if (compareCommodity(listCommodity.get(i), commodity)) {
-                    removeIndex = i;
-                }
-            }
-            if (removeIndex != -1) {
-                listCommodity.remove(removeIndex);
-            }
-            purse.withdrawMoney(commodity.getPrice());
-            result = true;
-        }else
-        {
-            result = false;
-        }
-        return result;
     }
 
     /**

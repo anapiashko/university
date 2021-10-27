@@ -19,6 +19,6 @@ public class Commodity {
     }
 
     public String toString(){
-        return "Название товара: " + name + "; Цена товара" + price;
+        return "Название товара : " + name + "; Цена товара : " + price;
     }
 }
