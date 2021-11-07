@@ -1,0 +1,4 @@
+Statistics:
+Games played: 13 -> Win: 0
+Games played with numbers: 10 -> Win: 0
+Games played with image: 3 -> Win: 0
