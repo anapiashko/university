@@ -1,4 +1,4 @@
-Statistics:
-Games played: 13 -> Win: 0
-Games played with numbers: 10 -> Win: 0
-Games played with image: 3 -> Win: 0
+Статистика:
+Всего игр: 91 -> Всего побед: 3
+Кол-во игр с цифрами: 76 -> Побед: 2
+Кол-во игр с картинками: 15 -> Побед: 1

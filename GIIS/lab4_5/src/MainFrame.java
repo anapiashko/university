@@ -14,42 +14,47 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainFrame extends  JFrame{
+public class MainFrame extends JFrame {
+
     Integer scoreGame = 0;
-    Integer scoreGameNumber= 0;
-    Integer scoreGameImage= 0;
-    Integer scoreGameNumberWin= 0;
-    Integer scoreGameImageWin= 0;
+    Integer scoreGameNumber = 0;
+    Integer scoreGameImage = 0;
+    Integer scoreGameNumberWin = 0;
+    Integer scoreGameImageWin = 0;
     String imageSrc;
     String statisticFile = "statistics.txt";
-    Magic15 mainPanel;
+    Puzzle mainPanel;
     String mode;
-    boolean win = false;
-    boolean win2 = true;
-    public MainFrame(){
+    boolean win;
+    boolean shift;
+
+    public MainFrame() {
+
         setJMenuBar(createMenu());
         loadStatistics();
         imageSrc = "src//images//nature.png";
         mode = "numbers";
         win = false;
-        win2 = true;
-        mainPanel = new Magic15();
+        shift = true;
+        mainPanel = new Puzzle();
         scoreGame++;
         scoreGameNumber++;
         add(mainPanel);
-        addWindowListener(new WindowAdapter(){
+
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent ev){
+            public void windowClosing(WindowEvent ev) {
                 closeWindow();
             }
         });
+
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent evt) {
-                if(win2) {
+                if (shift) {
                     checkWin();
                 }
-                if(win2) {
+                if (shift) {
                     switch (evt.getKeyCode()) {
                         case KeyEvent.VK_UP:
                             mainPanel.move("up");
@@ -70,97 +75,109 @@ public class MainFrame extends  JFrame{
             }
         });
     }
+
     private void checkWin() {
         if (mainPanel.win) {
             win = true;
             mainPanel.win = false;
         }
 
-        if (win == true) {
-            if (mode.equals("numbers"))
+        if (win) {
+            if (mode.equals("numbers")) {
                 scoreGameNumberWin++;
-            else
+            }
+            else {
                 scoreGameImageWin++;
+            }
             win = false;
-            win2 = false;
+            shift = false;
         }
     }
-    private boolean newGame(String str){
-        int res = JOptionPane.showConfirmDialog(MainFrame.this,"Start new game" + str + "?",
+
+    private boolean newGame(String str) {
+
+        int res = JOptionPane.showConfirmDialog(MainFrame.this, "The game will start over" + str + ". Continue?",
                 "New game", JOptionPane.YES_NO_OPTION);
-        if(res == JOptionPane.YES_OPTION){
+
+        if (res == JOptionPane.YES_OPTION) {
             remove(mainPanel);
-            if(mode.equals("numbers")) {
-                mainPanel = new Magic15();
-                scoreGameNumber ++;
+            if (mode.equals("numbers")) {
+                mainPanel = new Puzzle();
+                scoreGameNumber++;
             }
-            if(mode.equals("image")) {
-                mainPanel = new Magic15(imageSrc);
-                scoreGameImage ++;
+            if (mode.equals("image")) {
+                mainPanel = new Puzzle(imageSrc);
+                scoreGameImage++;
             }
-            scoreGame ++;
+            scoreGame++;
             win = false;
-            win2 = true;
+            shift = true;
             add(mainPanel);
             checkWin();
             pack();
-        }
-        else
+        } else {
             return false;
+        }
         return true;
     }
-    private JMenuBar createMenu(){
+
+    private JMenuBar createMenu() {
+
         JMenuBar menu = new JMenuBar();
         JMenu game = new JMenu("Game");
+        game.setFont(new Font(game.getFont().getFontName(), Font.PLAIN, 15));
         JMenuItem newGame = new JMenuItem("New Game");
         newGame.addActionListener(e -> newGame(""));
         JMenuItem statistics = new JMenuItem("Statistics");
+
         statistics.addActionListener(e -> {
             checkWin();
             JOptionPane.showMessageDialog(MainFrame.this,
-                    new String[]{"Games played: " + scoreGame + " -> Win: " + (scoreGameNumberWin + scoreGameImageWin),
-                            "Games played with numbers: " + scoreGameNumber + " -> Win: " + scoreGameNumberWin,
-                            "Games played with image: " + scoreGameImage + " -> Win: " + scoreGameImageWin
+                    new String[]{"Всего игр: " + scoreGame + " -> Всего побед: " + (scoreGameNumberWin + scoreGameImageWin),
+                            "Кол-во игр с цифрами: " + scoreGameNumber + " -> Побед: " + scoreGameNumberWin,
+                            "Кол-во игр с картинками: " + scoreGameImage + " -> Побед: " + scoreGameImageWin
                     }, "Statistics", JOptionPane.INFORMATION_MESSAGE);
         });
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(e -> {
             closeWindow();
         });
+
         game.add(newGame);
         game.add(statistics);
         game.addSeparator();
         game.add(exit);
 
         JMenu settings = new JMenu("Settings");
+        settings.setFont(new Font(settings.getFont().getFontName(), Font.PLAIN, 15));
         JRadioButtonMenuItem numbers = new JRadioButtonMenuItem("Numbers");
         JRadioButtonMenuItem image = new JRadioButtonMenuItem("Image");
         numbers.setEnabled(false);
         numbers.setSelected(true);
+
         numbers.addActionListener(e -> {
             numbers.setEnabled(false);
             image.setSelected(false);
             mode = "numbers";
-            if(newGame(" with numbers") == false){
+            if (!newGame(" with numbers")) {
                 mode = "image";
                 image.setSelected(true);
                 numbers.setSelected(false);
                 numbers.setEnabled(true);
-            }
-            else
+            } else
                 image.setEnabled(true);
         });
+
         image.addActionListener(e -> {
             image.setEnabled(false);
             numbers.setSelected(false);
             mode = "image";
-            if(newGame(" with image") == false){
+            if (!newGame(" with image")) {
                 mode = "numbers";
                 numbers.setSelected(true);
                 image.setSelected(false);
                 image.setEnabled(true);
-            }
-            else
+            } else
                 numbers.setEnabled(true);
         });
 
@@ -168,13 +185,13 @@ public class MainFrame extends  JFrame{
         loadImage.addActionListener(e -> {
             checkWin();
             JFileChooser c = new JFileChooser();
-            c.setCurrentDirectory(new File("src//lab1"));
+            c.setCurrentDirectory(new File("src//images"));
             int rVal = c.showOpenDialog(MainFrame.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
-                if(c.getSelectedFile().toString().contains(".jpg") || c.getSelectedFile().toString().contains(".png")){
-                    JOptionPane.showMessageDialog(MainFrame.this,"Wait");
+                if (c.getSelectedFile().toString().contains(".jpg") || c.getSelectedFile().toString().contains(".png")) {
+//                    JOptionPane.showMessageDialog(MainFrame.this, "Wait");
                     remove(mainPanel);
-                    mainPanel = new Magic15(c.getSelectedFile().toString());
+                    mainPanel = new Puzzle(c.getSelectedFile().toString());
                     imageSrc = c.getSelectedFile().toString();
                     image.setEnabled(false);
                     numbers.setSelected(false);
@@ -185,15 +202,16 @@ public class MainFrame extends  JFrame{
                     scoreGame++;
                     add(mainPanel);
                     pack();
-                    JOptionPane.showMessageDialog(MainFrame.this,"Load success");
+//                    JOptionPane.showMessageDialog(MainFrame.this, "Load success");
                 }
+            } else if (rVal == JFileChooser.CANCEL_OPTION) {
+//                JOptionPane.showMessageDialog(MainFrame.this, "Load cancel",
+//                        "", JOptionPane.OK_OPTION);
             }
-            else if (rVal == JFileChooser.CANCEL_OPTION)
-                JOptionPane.showMessageDialog(MainFrame.this,"Load cancel",
-                        "", JOptionPane.OK_OPTION);
-            else
-                JOptionPane.showMessageDialog(MainFrame.this,"Pick image in jpg or png format",
+            else {
+                JOptionPane.showMessageDialog(MainFrame.this, "Pick image in jpg or png format",
                         "Error", JOptionPane.OK_OPTION);
+            }
 
         });
 
@@ -201,37 +219,33 @@ public class MainFrame extends  JFrame{
         settings.add(image);
         settings.add(loadImage);
         JMenu help = new JMenu("Help");
+        help.setFont(new Font(help.getFont().getFontName(), Font.PLAIN, 15));
         JMenuItem rules = new JMenuItem("Rules");
         rules.addActionListener(e -> {
             checkWin();
             JOptionPane.showMessageDialog(MainFrame.this,
-                    new String[] {"Цель игры: перемещая костяшки по коробке,",
+                    new String[]{"Цель игры: перемещая костяшки по коробке,",
                             "добиться упорядочивания их по номерам от 1 до 15, ",
                             "желательно, сделав как можно меньше перемещений."
-                    },"Rules",JOptionPane.INFORMATION_MESSAGE);
+                    }, "Rules", JOptionPane.INFORMATION_MESSAGE);
         });
-        JMenuItem about = new JMenuItem("About");
-        about.addActionListener(e -> {
-            checkWin();
-            JOptionPane.showMessageDialog(MainFrame.this,
-                    new String[] {"Crazy_pro Alex",
-                            "by 01.12.2018"
-                    },"About",JOptionPane.INFORMATION_MESSAGE);
-        });
+
         help.add(rules);
-        help.add(about);
 
         menu.add(game);
         menu.add(settings);
         menu.add(help);
+        menu.setPreferredSize(new Dimension(menu.getWidth(), menu.getHeight() + 30));
         return menu;
     }
-    private void closeWindow(){
+
+    private void closeWindow() {
         checkWin();
         saveStatistics();
         setVisible(false);
         dispose();
     }
+
     private void loadStatistics() {
         try {
             File file = new File(statisticFile);
@@ -241,15 +255,15 @@ public class MainFrame extends  JFrame{
                 Files.lines(Paths.get(statisticFile), StandardCharsets.UTF_8)
                         .forEach(e -> list.add(e));
                 Matcher m = p.matcher(list.get(1));
-                if(m.find())
+                if (m.find())
                     scoreGame = Integer.parseInt(m.group(1));
                 m = p.matcher(list.get(2));
-                if(m.find()){
+                if (m.find()) {
                     scoreGameNumber = Integer.parseInt(m.group(1));
                     scoreGameNumberWin = Integer.parseInt(m.group(2));
                 }
                 m = p.matcher(list.get(3));
-                if(m.find()){
+                if (m.find()) {
                     scoreGameImage = Integer.parseInt(m.group(1));
                     scoreGameImageWin = Integer.parseInt(m.group(2));
                 }
@@ -259,33 +273,31 @@ public class MainFrame extends  JFrame{
             e.printStackTrace();
         }
     }
-    private void saveStatistics(){
+
+    private void saveStatistics() {
         try {
             File file = new File(statisticFile);
             file.createNewFile();
             try (FileWriter writer = new FileWriter(file)) {
-                writer.write("Statistics:\n");
-                writer.write("Games played: "+ scoreGame + " -> Win: "+ (scoreGameNumberWin + scoreGameImageWin) + "\n");
-                writer.write("Games played with numbers: "+ scoreGameNumber +" -> Win: "+ scoreGameNumberWin + "\n");
-                writer.write("Games played with image: " + scoreGameImage + " -> Win: "+ scoreGameImageWin + "\n");
+                writer.write("Статистика:\n");
+                writer.write("Всего игр: " + scoreGame + " -> Всего побед: " + (scoreGameNumberWin + scoreGameImageWin) + "\n");
+                writer.write("Кол-во игр с цифрами: " + scoreGameNumber + " -> Побед: " + scoreGameNumberWin + "\n");
+                writer.write("Кол-во игр с картинками: " + scoreGameImage + " -> Побед: " + scoreGameImageWin + "\n");
                 writer.flush();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
-            JFrame frame = new MainFrame();
-            frame.setSize(500,500);
-            frame.setLocationRelativeTo(null);
-            frame.setTitle("Magic 15");
-            frame.setVisible(true);
-            frame.setResizable(false);
-            frame.setLayout(new GridBagLayout());
-            frame.pack();
-
-
-
+        JFrame frame = new MainFrame();
+        frame.setSize(500, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setTitle("Пятнашки");
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setLayout(new GridBagLayout());
+        frame.pack();
     }
 }
