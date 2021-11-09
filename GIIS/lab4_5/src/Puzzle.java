@@ -22,7 +22,6 @@ public class Puzzle extends JPanel {
     public BufferedImage[][] images;
 
     private void initialize() {
-        JOptionPane.showMessageDialog(Puzzle.this, "Отлично, Победа !!!");
         setSize(sizeBlock * sizeBlock, sizeBlock * sizeBlock);
         row = sizeGame - 1;
         col = sizeGame - 1;
