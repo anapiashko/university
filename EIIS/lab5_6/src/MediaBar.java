@@ -8,45 +8,50 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 
-public class MediaBar extends HBox { // MediaBar extends Horizontal Box
+public class MediaBar extends HBox {
 
     // introducing Sliders
     Slider time = new Slider(); // Slider for time
     Slider vol = new Slider(); // Slider for volume
-    Button PlayButton = new Button("||"); // For pausing the player
-    Label volume = new Label("Volume: ");
+
+    Button playButton = new Button("||");
+    Label volumeLabel = new Label("Volume: ");
     MediaPlayer player;
 
     public MediaBar(MediaPlayer play) { // Default constructor taking
-        // the MediaPlayer object
+
         player = play;
 
-        setAlignment(Pos.CENTER); // setting the HBox to center
+        setAlignment(Pos.CENTER);
         setPadding(new Insets(5, 10, 5, 10));
-        // Settih the preference for volume bar
+
         vol.setPrefWidth(70);
         vol.setMinWidth(30);
         vol.setValue(100);
+
         HBox.setHgrow(time, Priority.ALWAYS);
-        PlayButton.setPrefWidth(30);
+        playButton.setPrefWidth(30);
 
         // Adding the components to the bottom
-
-        getChildren().add(PlayButton); // Playbutton
-        getChildren().add(time); // time slider
-        getChildren().add(volume); // volume slider
+        getChildren().add(playButton);
+        getChildren().add(time);
+        getChildren().add(volumeLabel);
         getChildren().add(vol);
 
-        // Adding Functionality
-        // to play the media player
-        PlayButton.setOnAction(new EventHandler<ActionEvent>() {
+        setStyle("-fx-background-color: #F3FFFF;");
+
+        // Adding Functionality to play the media player
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                Status status = player.getStatus(); // To get the status of Player
+
+                Status status = player.getStatus();
+
                 if (status == status.PLAYING) {
 
                     // If the status is Video playing
@@ -59,12 +64,12 @@ public class MediaBar extends HBox { // MediaBar extends Horizontal Box
                         // Pausing the player
                         player.pause();
 
-                        PlayButton.setText(">");
+                        playButton.setText(">");
                     }
                 } // If the video is stopped, halted or paused
                 if (status == Status.HALTED || status == Status.STOPPED || status == Status.PAUSED) {
                     player.play(); // Start the video
-                    PlayButton.setText("||");
+                    playButton.setText("||");
                 }
             }
         });

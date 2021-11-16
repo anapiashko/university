@@ -13,19 +13,17 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 
-// launches the application
-public class Main extends Application {
+public class MediaMain extends Application {
     Player player;
     FileChooser fileChooser;
 
     public void start(final Stage primaryStage) {
-        // setting up the stages
-        MenuItem open = new MenuItem("Open");
+
         Menu file = new Menu("File");
+        MenuItem open = new MenuItem("Open");
         MenuBar menu = new MenuBar();
 
-        // Connecting the above three
-        file.getItems().add(open); // it would connect open with file
+        file.getItems().add(open);
         menu.getMenus().add(file);
 
         // Adding functionality to switch to different videos
@@ -51,7 +49,8 @@ public class Main extends Application {
         });
         // here you can choose any video
 
-        player = new Player(Paths.get("src\\resources\\sample_960x540.mp4").toUri().toString());
+//        player = new Player(Paths.get("src/resources/girl_near_sea.mp4").toUri().toString());
+        player = new Player(Paths.get("src/resources/sampleVideo.mp4").toUri().toString());
 
 
         // Setting the menu at the top
