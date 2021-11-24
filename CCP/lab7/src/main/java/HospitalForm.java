@@ -8,22 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class TrolleybusParkForm extends JFrame {
+public class HospitalForm extends JFrame {
+
     Integer selectedTab = 0;
-    TrolleybusPark database;
+    Hospital database;
     JTabbedPane tabbedPane = new JTabbedPane();
     ArrayList<JTable> tables;
-    String[] tabs = {"Drivers", "Trolleybuses", "Routes"};
+    String[] tabs = {"Patients", "Records"};
 
     JPanel panel = new JPanel(new BorderLayout());
 
-    public TrolleybusParkForm() {
+    public HospitalForm() {
         tables = new ArrayList<>();
-        database = new TrolleybusPark();
+        database = new Hospital();
         createWindow();
-        tables.add(createDriversTable());
-        tables.add(createTrolleybusesTable());
-        tables.add(createRoutesTable());
+        tables.add(createPatientsTable());
+        tables.add(createRecordsTable());
 
 
         for (int i = 0; i < tables.size(); i++) {
@@ -39,7 +39,7 @@ public class TrolleybusParkForm extends JFrame {
     }
 
     private void createWindow() {
-        setTitle("Trolleybus Park");
+        setTitle("Hospital");
         setSize(600, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -64,16 +64,12 @@ public class TrolleybusParkForm extends JFrame {
         repaint();
     }
 
-    private JTable createDriversTable() {
-        return createTable("SELECT * FROM drivers");
+    private JTable createPatientsTable() {
+        return createTable("SELECT * FROM patients");
     }
 
-    private JTable createRoutesTable() {
-        return createTable("SELECT id,trolleybus_id,driver_id,route_date,CONVERT(description USING utf8) description FROM routes");
-    }
-
-    private JTable createTrolleybusesTable() {
-        return createTable("SELECT * FROM trolleybuses");
+    private JTable createRecordsTable() {
+        return createTable("SELECT * FROM records");
     }
 
     private JTable createTable(String query) {
@@ -123,20 +119,14 @@ public class TrolleybusParkForm extends JFrame {
         remove.addActionListener(e -> {
             switch (selectedTab) {
                 case 0: {
-                    database.removeNote("drivers", (Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0));
-                    tables.set(0, createDriversTable());
+                    database.removeNote("patients", (Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0));
+                    tables.set(0, createPatientsTable());
                     update();
                     break;
                 }
                 case 1: {
-                    database.removeNote("trolleybus", (Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0));
-                    tables.set(1, createTrolleybusesTable());
-                    update();
-                    break;
-                }
-                case 2: {
-                    database.removeNote("routes", (Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0));
-                    tables.set(2, createRoutesTable());
+                    database.removeNote("records", (Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0));
+                    tables.set(1, createRecordsTable());
                     update();
                     break;
                 }
@@ -183,37 +173,32 @@ public class TrolleybusParkForm extends JFrame {
                 func(p1, new JLabel("Second name"), 0, 1, 1, 1, true, gbc);
                 func(p1, secondName, 1, 1, 4, 1, false, gbc);
 
-                JTextField experience = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
-                func(p1, new JLabel("Experience"), 0, 2, 1, 1, true, gbc);
-                func(p1, experience, 1, 2, 4, 1, false, gbc);
+                JTextField diagnose = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
+                func(p1, new JLabel("Diagnose"), 0, 2, 1, 1, true, gbc);
+                func(p1, diagnose, 1, 2, 4, 1, false, gbc);
 
                 save.addActionListener(e -> {
                     try {
-                        if (firstName.getText().equals("") || secondName.getText().equals("") || experience.getText().equals("")) {
+                        if (firstName.getText().equals("") || secondName.getText().equals("") || diagnose.getText().equals("")) {
                             throw new Exception();
                         }
-                        if (Double.parseDouble(experience.getText()) < 0) {
-                            throw new NumberFormatException();
-                        }
                         if (index.equals(-1)) {
-                            database.addNote("drivers", new Object[]{
+                            database.addNote("patients", new Object[]{
                                     firstName.getText(),
                                     secondName.getText(),
-                                    Double.parseDouble(experience.getText())
+                                    diagnose.getText()
                             });
                         } else {
-                            database.updateNote("drivers", new Object[]{
+                            database.updateNote("patients", new Object[]{
                                     firstName.getText(),
                                     secondName.getText(),
-                                    Double.parseDouble(experience.getText())
+                                    diagnose.getText()
                             }, index);
                         }
                         frame.dispose();
                         frame.setVisible(false);
-                        tables.set(0, createDriversTable());
+                        tables.set(0, createPatientsTable());
                         update();
-                    } catch (NumberFormatException exception) {
-                        JOptionPane.showMessageDialog(this, "Experiences must be positive number", "Error", JOptionPane.OK_OPTION);
                     } catch (Exception generalException) {
                         JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
                     }
@@ -224,65 +209,14 @@ public class TrolleybusParkForm extends JFrame {
                 });
                 break;
             }
-            // Trolleybuses
+            // Records
             case 1: {
-                JTextField number = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 1).toString(), 10);
-                func(p1, new JLabel("Number"), 0, 0, 1, 1, true, gbc);
-                func(p1, number, 1, 0, 4, 1, true, gbc);
-
-                JTextField mileage = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 2).toString(), 10);
-                func(p1, new JLabel("Mileage"), 0, 1, 1, 1, true, gbc);
-                func(p1, mileage, 1, 1, 4, 1, false, gbc);
-
-                JTextField productionYear = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
-                func(p1, new JLabel("Production year"), 0, 2, 1, 1, true, gbc);
-                func(p1, productionYear, 1, 2, 4, 1, false, gbc);
-
-
-                save.addActionListener(e -> {
-                    try {
-                        if (number.getText().equals("") || mileage.getText().equals("") || productionYear.getText().equals(""))
-                            throw new Exception();
-
-
-                        if (index.equals(-1)) {
-                            database.addNote("trolleybuses", new Object[]{
-                                    number.getText(),
-                                    Integer.parseInt(mileage.getText()),
-                                    Integer.parseInt(productionYear.getText())
-                            });
-                        } else {
-                            database.updateNote("trolleybuses", new Object[]{
-                                    number.getText(),
-                                    Double.parseDouble(mileage.getText()),
-                                    Integer.parseInt(productionYear.getText())}, index);
-                        }
-                        frame.dispose();
-                        frame.setVisible(false);
-                        tables.set(1, createTrolleybusesTable());
-                        update();
-                    } catch (NumberFormatException exception) {
-                        JOptionPane.showMessageDialog(this, "Fields must be number", "Error", JOptionPane.OK_OPTION);
-                    } catch (Exception generalException) {
-                        JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
-                    }
-                });
-                cancel.addActionListener(e -> {
-                    frame.dispose();
-                    frame.setVisible(false);
-                });
-                break;
-            }
-            // Routes
-            case 2: {
                 LinkedHashMap<String, Integer> drivers = new LinkedHashMap<>();
-                LinkedHashMap<String, Integer> trolleybuses = new LinkedHashMap<>();
 
-                JComboBox trolleybus = new JComboBox();
-                JComboBox driver = new JComboBox();
+                JComboBox patient = new JComboBox();
 
                 try {
-                    ResultSet resultSet = database.statement.executeQuery("SELECT * FROM drivers");
+                    ResultSet resultSet = database.statement.executeQuery("SELECT * FROM patients");
                     ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
                     String[] columnNames = new String[resultSetMetaData.getColumnCount()];
 
@@ -292,44 +226,24 @@ public class TrolleybusParkForm extends JFrame {
                     columnNames = new String[]{columnNames[0], columnNames[2]};
                     for (int i = 0; resultSet.next(); i++) {
                         drivers.put(resultSet.getString(columnNames[1]), resultSet.getInt(columnNames[0]));
-                        driver.addItem(resultSet.getString(columnNames[1]));
-                    }
-
-
-                    resultSet = database.statement.executeQuery("SELECT * FROM trolleybuses");
-                    resultSetMetaData = resultSet.getMetaData();
-                    columnNames = new String[resultSetMetaData.getColumnCount()];
-
-                    for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-                        columnNames[i - 1] = resultSetMetaData.getColumnLabel(i);
-                    }
-                    columnNames = new String[]{columnNames[0], columnNames[1]};
-                    for (int i = 0; resultSet.next(); i++) {
-                        trolleybuses.put(resultSet.getString(columnNames[1]), resultSet.getInt(columnNames[0]));
-                        trolleybus.addItem(resultSet.getString(columnNames[1]));
+                        patient.addItem(resultSet.getString(columnNames[1]));
                     }
 
                 } catch (SQLException e) {
-                    System.out.println("Rotes table, getting initial content error : " + e.getMessage());
+                    System.out.println("Records table, getting initial content error : " + e.getMessage());
                 }
 
                 if (!index.equals(-1)) {
-                    trolleybus.setSelectedItem(tables.get(selectedTab).getValueAt(row, 2).toString());
+                    patient.setSelectedItem(tables.get(selectedTab).getValueAt(row, 3).toString());
                 }
-                func(p1, new JLabel("Trolleybus"), 0, 1, 1, 1, true, gbc);
-                func(p1, trolleybus, 1, 1, 4, 1, false, gbc);
+                func(p1, new JLabel("Patient"), 0, 2, 1, 1, true, gbc);
+                func(p1, patient, 1, 2, 4, 1, false, gbc);
 
-                if (!index.equals(-1)) {
-                    driver.setSelectedItem(tables.get(selectedTab).getValueAt(row, 3).toString());
-                }
-                func(p1, new JLabel("Driver"), 0, 2, 1, 1, true, gbc);
-                func(p1, driver, 1, 2, 4, 1, false, gbc);
-
-                JTextField date = index.equals(-1) ? new JTextField("2021-01-01", 10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
+                JTextField date = index.equals(-1) ? new JTextField("2021-01-01", 10) : new JTextField(tables.get(selectedTab).getValueAt(row, 2).toString(), 10);
                 func(p1, new JLabel("Date"), 0, 3, 1, 1, true, gbc);
                 func(p1, date, 1, 3, 4, 1, false, gbc);
 
-                JTextField description = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 4).toString(), 10);
+                JTextField description = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
                 func(p1, new JLabel("Description"), 0, 0, 1, 1, true, gbc);
                 func(p1, description, 1, 0, 4, 1, true, gbc);
 
@@ -339,23 +253,21 @@ public class TrolleybusParkForm extends JFrame {
                             throw new Exception();
                         }
                         if (index.equals(-1)) {
-                            database.addNote("routes", new Object[]{
+                            database.addNote("records", new Object[]{
                                     description.getText(),
-                                    drivers.get(driver.getSelectedItem()),
-                                    trolleybuses.get(trolleybus.getSelectedItem().toString()),
+                                    drivers.get(patient.getSelectedItem()),
                                     date.getText()
                             });
                         } else {
-                            database.updateNote("routes", new Object[]{
+                            database.updateNote("records", new Object[]{
                                     description.getText(),
-                                    drivers.get(driver.getSelectedItem()),
-                                    trolleybuses.get(trolleybus.getSelectedItem().toString()),
+                                    drivers.get(patient.getSelectedItem()),
                                     date.getText()
                             }, index);
                         }
                         frame.dispose();
                         frame.setVisible(false);
-                        tables.set(2, createRoutesTable());
+                        tables.set(1, createRecordsTable());
                         update();
                     } catch (NumberFormatException exception) {
                         JOptionPane.showMessageDialog(this, "Fields must be number", "Error", JOptionPane.OK_OPTION);
@@ -386,6 +298,6 @@ public class TrolleybusParkForm extends JFrame {
     }
 
     public static void main(String[] args) {
-        new TrolleybusParkForm();
+        new HospitalForm();
     }
 }
