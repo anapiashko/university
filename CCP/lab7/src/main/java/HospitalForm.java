@@ -106,10 +106,12 @@ public class HospitalForm extends JFrame {
 
     private JPanel bottomPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         JButton addButton = new JButton("Add");
         addButton.addActionListener(e -> {
             editForm(-1, -1);
         });
+
         JButton edit = new JButton("Edit");
         edit.addActionListener(e -> {
             editForm((Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0), tables.get(selectedTab).getSelectedRow());
@@ -132,6 +134,12 @@ public class HospitalForm extends JFrame {
                 }
             }
         });
+
+        JButton sort = new JButton("Sort");
+        sort.addActionListener(e -> {
+            sortForm((Integer) tables.get(selectedTab).getValueAt(tables.get(selectedTab).getSelectedRow(), 0), tables.get(selectedTab).getSelectedRow());
+        });
+
         panel.add(addButton);
         panel.add(edit);
         panel.add(remove);
@@ -284,6 +292,139 @@ public class HospitalForm extends JFrame {
         }
 
         p2.add(save);
+        p2.add(cancel);
+
+        p1.setSize(700, 700);
+        panel.add(p1, BorderLayout.CENTER);
+        panel.add(p2, BorderLayout.SOUTH);
+
+        frame.add(panel);
+        frame.setSize(300, 300);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void sortForm(Integer index, Integer row) {
+
+        JFrame frame = new JFrame();
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JPanel p1 = new JPanel(new GridBagLayout());
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.NORTH;
+
+        JPanel p2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton sort = new JButton("Sort");
+        JButton cancel = new JButton("Cancel");
+
+        switch (selectedTab) {
+            // Patients
+            case 0: {
+
+                JTextField secondName = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 2).toString(), 10);
+                func(p1, new JLabel("Second name"), 0, 1, 1, 1, true, gbc);
+                func(p1, secondName, 1, 1, 4, 1, false, gbc);
+
+                sort.addActionListener(e -> {
+                    try {
+                        if (secondName.getText().equals("")) {
+                            throw new Exception();
+                        }
+
+                        database.sort("patients");
+
+                        frame.dispose();
+                        frame.setVisible(false);
+                        tables.set(0, createPatientsTable());
+                        update();
+                    } catch (Exception generalException) {
+                        JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
+                    }
+                });
+                cancel.addActionListener(e -> {
+                    frame.dispose();
+                    frame.setVisible(false);
+                });
+                break;
+            }
+            // Records
+            case 1: {
+                LinkedHashMap<String, Integer> drivers = new LinkedHashMap<>();
+
+                JComboBox patient = new JComboBox();
+
+                try {
+                    ResultSet resultSet = database.statement.executeQuery("SELECT * FROM patients");
+                    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+                    String[] columnNames = new String[resultSetMetaData.getColumnCount()];
+
+                    for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+                        columnNames[i - 1] = resultSetMetaData.getColumnLabel(i);
+                    }
+                    columnNames = new String[]{columnNames[0], columnNames[2]};
+                    for (int i = 0; resultSet.next(); i++) {
+                        drivers.put(resultSet.getString(columnNames[1]), resultSet.getInt(columnNames[0]));
+                        patient.addItem(resultSet.getString(columnNames[1]));
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("Records table, getting initial content error : " + e.getMessage());
+                }
+
+                if (!index.equals(-1)) {
+                    patient.setSelectedItem(tables.get(selectedTab).getValueAt(row, 3).toString());
+                }
+                func(p1, new JLabel("Patient"), 0, 2, 1, 1, true, gbc);
+                func(p1, patient, 1, 2, 4, 1, false, gbc);
+
+                JTextField date = index.equals(-1) ? new JTextField("2021-01-01", 10) : new JTextField(tables.get(selectedTab).getValueAt(row, 2).toString(), 10);
+                func(p1, new JLabel("Date"), 0, 3, 1, 1, true, gbc);
+                func(p1, date, 1, 3, 4, 1, false, gbc);
+
+                JTextField description = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 3).toString(), 10);
+                func(p1, new JLabel("Description"), 0, 0, 1, 1, true, gbc);
+                func(p1, description, 1, 0, 4, 1, true, gbc);
+
+                sort.addActionListener(e -> {
+                    try {
+                        if (description.getText().equals("") || date.getText().equals("")) {
+                            throw new Exception();
+                        }
+                        if (index.equals(-1)) {
+                            database.addNote("records", new Object[]{
+                                    description.getText(),
+                                    drivers.get(patient.getSelectedItem()),
+                                    date.getText()
+                            });
+                        } else {
+                            database.updateNote("records", new Object[]{
+                                    description.getText(),
+                                    drivers.get(patient.getSelectedItem()),
+                                    date.getText()
+                            }, index);
+                        }
+                        frame.dispose();
+                        frame.setVisible(false);
+                        tables.set(1, createRecordsTable());
+                        update();
+                    } catch (NumberFormatException exception) {
+                        JOptionPane.showMessageDialog(this, "Fields must be number", "Error", JOptionPane.OK_OPTION);
+                    } catch (Exception generalException) {
+                        JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
+                    }
+                });
+                cancel.addActionListener(e -> {
+                    frame.dispose();
+                    frame.setVisible(false);
+                });
+                break;
+            }
+        }
+
+        p2.add(sort);
         p2.add(cancel);
 
         p1.setSize(700, 700);

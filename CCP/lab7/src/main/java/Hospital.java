@@ -70,4 +70,22 @@ public class Hospital {
             System.out.println("Updating error :" + e.getMessage());
         }
     }
+
+    public void sort(String table) {
+        try {
+            switch (table) {
+                case "patients": {
+                    statement.execute("SELECT * FROM `hospital`.`patients` ORDER BY `second_name`");
+                    break;
+                }
+                case "records": {
+                    statement.execute("select * from records order by record_date desc;");
+                    break;
+                }
+            }
+            System.out.println("Sorting successfully");
+        } catch (SQLException e) {
+            System.out.println("Updating error :" + e.getMessage());
+        }
+    }
 }
