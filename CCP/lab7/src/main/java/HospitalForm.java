@@ -88,16 +88,20 @@ public class HospitalForm extends JFrame {
                 }
             }
 
-
-            Object[][] data = new Object[dataList.size()][dataList.get(0).size()];
-            for (int i = 0; i < dataList.size(); i++)
-                for (int j = 0; j < dataList.get(0).size(); j++)
-                    data[i][j] = dataList.get(i).get(j);
+            Object[][] data = new Object[0][];
+            if(dataList.size() != 0) {
+                data = new Object[dataList.size()][dataList.get(0).size()];
+                for (int i = 0; i < dataList.size(); i++) {
+                    for (int j = 0; j < dataList.get(0).size(); j++) {
+                        data[i][j] = dataList.get(i).get(j);
+                    }
+                }
+            }
 
             table = new JTable(data, columnNames);
             table.setSelectionMode(0);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error in creating table : " + e.getMessage());;
         }
         return table;
     }
@@ -149,10 +153,33 @@ public class HospitalForm extends JFrame {
             }
         });
 
+        JButton find = new JButton("Find");
+        find.addActionListener(e -> {
+            findForm();
+        });
+
+        JButton restart = new JButton("Restart");
+        restart.addActionListener(e -> {
+            switch (selectedTab) {
+                case 0: {
+                    tables.set(0, createTable(SELECT_ALL_PATIENTS));
+                    update();
+                    break;
+                }
+                case 1: {
+                    tables.set(1, createTable(SELECT_ALL_RECORDS));
+                    update();
+                    break;
+                }
+            }
+        });
+
         panel.add(addButton);
         panel.add(edit);
         panel.add(remove);
         panel.add(sort);
+        panel.add(find);
+        panel.add(restart);
         return panel;
     }
 
@@ -181,7 +208,7 @@ public class HospitalForm extends JFrame {
         JButton cancel = new JButton("Cancel");
 
         switch (selectedTab) {
-            // Drivers
+            // Patients
             case 0: {
                 JTextField firstName = index.equals(-1) ? new JTextField(10) : new JTextField(tables.get(selectedTab).getValueAt(row, 1).toString(), 10);
                 func(p1, new JLabel("First name"), 0, 0, 1, 1, true, gbc);
@@ -302,6 +329,93 @@ public class HospitalForm extends JFrame {
         }
 
         p2.add(save);
+        p2.add(cancel);
+
+        p1.setSize(700, 700);
+        panel.add(p1, BorderLayout.CENTER);
+        panel.add(p2, BorderLayout.SOUTH);
+
+        frame.add(panel);
+        frame.setSize(300, 300);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void findForm() {
+
+        JFrame frame = new JFrame();
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JPanel p1 = new JPanel(new GridBagLayout());
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.NORTH;
+
+        JPanel p2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton find = new JButton("Find");
+        JButton cancel = new JButton("Cancel");
+
+        switch (selectedTab) {
+
+            // Patients
+            case 0: {
+
+                JTextField secondName = new JTextField(10);
+                func(p1, new JLabel("Second name"), 0, 1, 1, 1, true, gbc);
+                func(p1, secondName, 1, 1, 4, 1, false, gbc);
+
+                find.addActionListener(e -> {
+                    try {
+                        if (secondName.getText().equals("")) {
+                            throw new Exception();
+                        }
+
+                        frame.dispose();
+                        frame.setVisible(false);
+                        tables.set(0, createTable("SELECT * FROM patients WHERE second_name = '" + secondName.getText() +"'"));
+                        update();
+                    } catch (Exception generalException) {
+                        System.out.println("Error in finding patient : " + generalException.getMessage());
+                        JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
+                    }
+                });
+                cancel.addActionListener(e -> {
+                    frame.dispose();
+                    frame.setVisible(false);
+                });
+                break;
+            }
+            // Records
+            case 1: {
+
+                JTextField date = new JTextField("2021-01-01", 10);
+                func(p1, new JLabel("Date"), 0, 3, 1, 1, true, gbc);
+                func(p1, date, 1, 3, 4, 1, false, gbc);
+
+                find.addActionListener(e -> {
+                    try {
+                        if (date.getText().equals("")) {
+                            throw new Exception();
+                        }
+                        frame.dispose();
+                        frame.setVisible(false);
+                        tables.set(1, createTable("SELECT * FROM records WHERE record_date = '" + date.getText() +"'"));
+                        update();
+                    } catch (Exception generalException) {
+                        JOptionPane.showMessageDialog(this, "Empty fields", "Error", JOptionPane.OK_OPTION);
+                    }
+                });
+                cancel.addActionListener(e -> {
+                    frame.dispose();
+                    frame.setVisible(false);
+                });
+                break;
+            }
+        }
+
+        p2.add(find);
         p2.add(cancel);
 
         p1.setSize(700, 700);
