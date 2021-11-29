@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
     <style>
@@ -14,63 +15,129 @@
 </head>
 <body>
 <div>
+    <h3 style="text-align: center">Колонка №2</h3>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-1 ">
+
+        </div>
+        <div class="col-sm-4  ">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">Стоимость топлива</h5>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            АИ-92
+                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                                2.00
+                                <small style="padding: 0 1px 0 5px;">BYN</small>
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            АИ-95
+                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                                2.10
+                                <small style="padding: 0 1px 0 5px;">BYN</small>
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ДТ
+                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                                2.08
+                                <small style="padding: 0 1px 0 5px;">BYN</small>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 ">
             <div class="card">
                 <div class="card-body">
-                    <div class="input-group">
-                        <input id="dropdown-input" type="text" class="form-control" aria-label="Text input with dropdown button">
+                    <h5 class="card-title">Купить</h5>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <div class="input-group mb-3">
+                        <label for="dropdown-input" class="col-sm-3 col-form-label">Выберите вид :</label>
+                        <input id="dropdown-input" type="text" class="form-control"
+                               aria-label="Text input with dropdown button" disabled>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">Выпадающий список
+                            </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" href="#">АИ-92</a>
+                                <a class="dropdown-item" href="#">АИ-95</a>
+                                <a class="dropdown-item" href="#">ДТ</a>
                             </div>
                         </div>
                     </div>
-                    <div role="separator" class="dropdown-divider"></div>
                     <div class="input-group mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Количество (л):</label>
+                        <label for="quantity-input" class="col-sm-3 col-form-label">Количество :</label>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon2">l</span>
+                            <span class="input-group-text" id="basic-addon2">(л)</span>
                         </div>
-                        <input id="inputEmail3"  type="text" class="form-control" placeholder="Username" aria-label="Username"
+                        <input id="quantity-input" type="number" min="1" class="form-control" aria-label="Quantity"
                                aria-describedby="basic-addon2">
                     </div>
                     <div class="input-group mb-3">
+                        <label for="amount-input" class="col-sm-3 col-form-label">К оплате :</label>
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3">BYN</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon3">
+                        <input id="amount-input" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon3">
                     </div>
                 </div>
+                <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
+                    <a href="#" class="btn btn-secondary btn btn-block text-truncate mt-auto" onclick="resetInputs()">Сбросить</a>
+                    <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn btn-block text-truncate mt-auto">Подтвердить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Заказ обработан</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Толиво АИ-95 в количестве 20 л, на общую сумму 42 BYN доступно
+            </div>
+            <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
+                <a href="#" class="btn btn-primary btn btn-block text-truncate mt-auto" data-dismiss="modal">Окей</a>
             </div>
         </div>
     </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script>
-    $(function(){
-
-        $(".dropdown-menu a").click(function(){
+    $(function () {
+        $(".dropdown-menu a").click(function () {
             document.getElementById("dropdown-input").value = $(this).text();
         });
-
     });
+    function resetInputs() {
+        document.getElementById("dropdown-input").value = '';
+        document.getElementById("quantity-input").value = '';
+        document.getElementById("amount-input").value = '';
+    }
 </script>
 </body>
 </html>
