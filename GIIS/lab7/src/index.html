@@ -13,36 +13,36 @@
     <style>
     </style>
 </head>
-<body>
+<body style="background-color:#383838;">
 <div>
-    <h3 style="text-align: center">Колонка №2</h3>
+    <h3 style="text-align: center;color: white ">Колонка №2</h3>
     <div class="row">
         <div class="col-sm-1 ">
 
         </div>
-        <div class="col-sm-4  ">
+        <div class="col-sm-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="background: #c6c8ca">
                     <h5 class="card-title">Стоимость топлива</h5>
                     <div role="separator" class="dropdown-divider"></div>
                     <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
                             АИ-92
-                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                            <span style="font-size: large" class="badge badge-info badge-pill">
                                 2.00
                                 <small style="padding: 0 1px 0 5px;">BYN</small>
                             </span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
                             АИ-95
-                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                            <span style="font-size: large" class="badge badge-info badge-pill">
                                 2.10
                                 <small style="padding: 0 1px 0 5px;">BYN</small>
                             </span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
                             ДТ
-                            <span style="font-size: large" class="badge badge-primary badge-pill">
+                            <span style="font-size: large" class="badge badge-info badge-pill">
                                 2.08
                                 <small style="padding: 0 1px 0 5px;">BYN</small>
                             </span>
@@ -53,7 +53,7 @@
         </div>
         <div class="col-sm-6 ">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="background: #c6c8ca">
                     <h5 class="card-title">Купить</h5>
                     <div role="separator" class="dropdown-divider"></div>
                     <div class="input-group mb-3">
@@ -90,17 +90,20 @@
                     </div>
                 </div>
                 <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
-                    <a href="#" class="btn btn-secondary btn btn-block text-truncate mt-auto" onclick="resetInputs()">Сбросить</a>
-                    <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn btn-block text-truncate mt-auto">Подтвердить</a>
+                    <a href="#" class="btn btn-secondary btn btn-block text-truncate mt-auto"
+                       onclick="resetInputs()">Сбросить</a>
+                    <a href="#" data-toggle="modal" data-target="#exampleModal"
+                       class="btn btn-info btn btn-block text-truncate mt-auto">Подтвердить</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="background: #c6c8ca">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Заказ обработан</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -111,7 +114,7 @@
                 Толиво АИ-95 в количестве 20 л, на общую сумму 42 BYN доступно
             </div>
             <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
-                <a href="#" class="btn btn-primary btn btn-block text-truncate mt-auto" data-dismiss="modal">Окей</a>
+                <a href="#" class="btn btn-info btn btn-block text-truncate mt-auto" data-dismiss="modal">Окей</a>
             </div>
         </div>
     </div>
@@ -133,6 +136,7 @@
             document.getElementById("dropdown-input").value = $(this).text();
         });
     });
+
     function resetInputs() {
         document.getElementById("dropdown-input").value = '';
         document.getElementById("quantity-input").value = '';
