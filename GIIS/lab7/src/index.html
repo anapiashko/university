@@ -59,7 +59,7 @@
                     <div class="input-group mb-3">
                         <label for="dropdown-input" class="col-sm-3 col-form-label">Выберите вид :</label>
                         <input id="dropdown-input" type="text" class="form-control"
-                               aria-label="Text input with dropdown button" disabled>
+                               aria-label="Text input with dropdown button" onchange="this.style.borderColor='white'" disabled>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                     data-toggle="dropdown"
@@ -78,7 +78,7 @@
                             <span class="input-group-text" id="basic-addon2">(л)</span>
                         </div>
                         <input id="quantity-input" type="number" min="1" class="form-control" aria-label="Quantity"
-                               aria-describedby="basic-addon2">
+                               aria-describedby="basic-addon2" onchange="this.style.borderColor='white'">
                     </div>
                     <div class="input-group mb-3">
                         <label for="amount-input" class="col-sm-3 col-form-label">К оплате :</label>
@@ -86,13 +86,13 @@
                             <span class="input-group-text" id="basic-addon3">BYN</span>
                         </div>
                         <input id="amount-input" type="text" class="form-control" aria-label="Username"
-                               aria-describedby="basic-addon3">
+                               aria-describedby="basic-addon3" onchange="this.style.borderColor='white'">
                     </div>
                 </div>
                 <div class="btn-group btn-group-justified" role="group" aria-label="Basic example">
                     <a href="#" class="btn btn-secondary btn btn-block text-truncate mt-auto"
                        onclick="resetInputs()">Сбросить</a>
-                    <a href="#" data-toggle="modal" data-target="#exampleModal"
+                    <a href="#" onclick="validateInputs()"
                        class="btn btn-info btn btn-block text-truncate mt-auto">Подтвердить</a>
                 </div>
             </div>
@@ -141,6 +141,25 @@
         document.getElementById("dropdown-input").value = '';
         document.getElementById("quantity-input").value = '';
         document.getElementById("amount-input").value = '';
+    }
+
+    function validateInputs() {
+        let modal = true;
+        if(!document.getElementById("dropdown-input").value) {
+            document.getElementById("dropdown-input").style.borderColor = "red"
+            modal = false;
+        }
+        if(!document.getElementById("quantity-input").value) {
+            document.getElementById("quantity-input").style.borderColor = "red"
+            modal = false;
+        }
+        if(!document.getElementById("amount-input").value) {
+            document.getElementById("amount-input").style.borderColor = "red"
+            modal = false;
+        }
+        if (modal) {
+            $('#exampleModal').modal('show')
+        }
     }
 </script>
 </body>
