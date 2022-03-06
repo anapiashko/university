@@ -67,8 +67,8 @@ public class A {
 
     public static String decrypt(String key, String encrypted) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(KDC.initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            IvParameterSpec iv = new IvParameterSpec(KDC.initVector.getBytes(StandardCharsets.UTF_8));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
