@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -14,8 +16,6 @@ public class Main {
     static final int z = 2;
 
     int[][][] matrix = new int[k1][k2][z];
-//    //
-//    int[] Xhv = new int[k1 + k2 + 1];
 
     int[][][] matrixWithMistake = new int[k1][k2][z];
 
@@ -34,7 +34,8 @@ public class Main {
         // size k1xk2
         int[][] paritetZ = main.calculateZ(main.matrix);
 
-        Integer[] indexesWithMistake = {6, 12};
+//        Integer[] indexesWithMistake = {6, 12};
+        Integer[] indexesWithMistake = main.getIndexesWithMistakeFromConsole();
 
         main.fillMatrixByMessageWithMistake(message, indexesWithMistake);
 
@@ -46,11 +47,13 @@ public class Main {
         List<Boolean[]> placeOfMistakeXv = main.compareParitetsXv(Xv, XvWithMistake);
         boolean[][] placeOfMistakeParitetsZ = main.compareParitetsZ(paritetZ, paritetZWithMistake);
 
-        main.findAndCorrectMistake(placeOfMistakeXh, placeOfMistakeXv, placeOfMistakeParitetsZ);
+        String result = main.findAndCorrectMistake(placeOfMistakeXh, placeOfMistakeXv, placeOfMistakeParitetsZ);
+
+        System.out.println("Result : " + message.equals(result));
 
     }
 
-    private void findAndCorrectMistake(List<Boolean[]> placeOfMistakeXh, List<Boolean[]> placeOfMistakeXv,
+    private String findAndCorrectMistake(List<Boolean[]> placeOfMistakeXh, List<Boolean[]> placeOfMistakeXv,
                                        boolean[][] placeOfMistakeParitetsZ) {
 
 
@@ -67,6 +70,17 @@ public class Main {
         }
 
         printMatrix("\nCorrected matrix with mistakes : ", matrixWithMistake);
+
+        StringBuilder finalString= new StringBuilder();
+        for (int m = 0; m < z; m++) {
+            for (int i = 0; i < k1; i++) {
+                for (int j = 0; j < k2; j++) {
+                    finalString.append(matrix[i][j][m]);
+                }
+            }
+        }
+        System.out.println("finalString = " + finalString);
+        return finalString.toString();
     }
 
     private boolean[][] compareParitetsZ(int[][] paritetZ, int[][] paritetZWithMistake) {
@@ -234,5 +248,14 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    private Integer[] getIndexesWithMistakeFromConsole() {
+        System.out.println("Enter the indexes of mistake using comma: ");
+        Scanner scanner = new Scanner(System.in);
+        String mistakes = scanner.nextLine();
+        String[] indexes = mistakes.split(",");
+        int[] convertFromStringToInt = Stream.of(indexes).mapToInt(Integer::parseInt).toArray();
+        return Arrays.stream(convertFromStringToInt).boxed().toArray(Integer[]::new);
     }
 }
