@@ -14,8 +14,6 @@ public class Main {
     static final int z = 2;
 
     int[][][] matrix = new int[k1][k2][z];
-
-    int[][] paritetZ = new int[k1][k2];
 //    //
 //    int[] Xhv = new int[k1 + k2 + 1];
 
@@ -27,20 +25,103 @@ public class Main {
         String message = "01011011110000110110";
 
         Main main = new Main();
+
         main.fillMatrixByMessage(message);
         // size k2
-        List<Integer[]> Xh = main.calculateXh();
+        List<Integer[]> Xh = main.calculateXh(main.matrix);
         // size k1
-        List<Integer[]> Xv = main.calculateXv();
-        main.calculateZ();
+        List<Integer[]> Xv = main.calculateXv(main.matrix);
+        // size k1xk2
+        int[][] paritetZ = main.calculateZ(main.matrix);
 
-        Integer[] indexesWithMistake = {1, 6, 12, 19};
+        Integer[] indexesWithMistake = {6, 12};
 
         main.fillMatrixByMessageWithMistake(message, indexesWithMistake);
 
+        List<Integer[]> XhWithMistake = main.calculateXh(main.matrixWithMistake);
+        List<Integer[]> XvWithMistake = main.calculateXv(main.matrixWithMistake);
+        int[][] paritetZWithMistake = main.calculateZ(main.matrixWithMistake);
+
+        List<Boolean[]> placeOfMistakeXh = main.compareParitetsXh(Xh, XhWithMistake);
+        List<Boolean[]> placeOfMistakeXv = main.compareParitetsXv(Xv, XvWithMistake);
+        boolean[][] placeOfMistakeParitetsZ = main.compareParitetsZ(paritetZ, paritetZWithMistake);
+
+        main.findAndCorrectMistake(placeOfMistakeXh, placeOfMistakeXv, placeOfMistakeParitetsZ);
+
     }
 
-    private void calculateZ() {
+    private void findAndCorrectMistake(List<Boolean[]> placeOfMistakeXh, List<Boolean[]> placeOfMistakeXv,
+                                       boolean[][] placeOfMistakeParitetsZ) {
+
+
+        for (int i = 0; i < k1; i++) {
+            for (int j = 0; j < k2; j++) {
+                if (placeOfMistakeParitetsZ[i][j]) {
+                    for (int m = 0; m < placeOfMistakeXh.size(); m++) {
+                        if (placeOfMistakeXh.get(m)[i] && placeOfMistakeXv.get(m)[j]) {
+                            matrixWithMistake[i][j][m] ^= 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        printMatrix("\nCorrected matrix with mistakes : ", matrixWithMistake);
+    }
+
+    private boolean[][] compareParitetsZ(int[][] paritetZ, int[][] paritetZWithMistake) {
+        boolean[][] placeOfMistake = new boolean[k1][k2];
+        for (int i = 0; i < k1; i++) {
+            for (int j = 0; j < k2; j++) {
+                placeOfMistake[i][j] = paritetZ[i][j] != paritetZWithMistake[i][j];
+            }
+        }
+        System.out.println("\nplaceOfMistake paritetZ :");
+        for (int i = 0; i < k1; i++) {
+            for (int j = 0; j < k2; j++) {
+                System.out.print(placeOfMistake[i][j] + " ");
+            }
+            System.out.println();
+        }
+        return placeOfMistake;
+    }
+
+    private List<Boolean[]> compareParitetsXh(List<Integer[]> Xh, List<Integer[]> XhWithMistake) {
+
+        // size k1
+        List<Boolean[]> placeOfMistake = new ArrayList<>();
+        for (int i = 0; i < Xh.size(); i++) {
+            Boolean[] placeOfMistakeSingle = new Boolean[k1];
+            for (int j = 0; j < k1; j++) {
+                placeOfMistakeSingle[j] = !Xh.get(i)[j].equals(XhWithMistake.get(i)[j]);
+            }
+            placeOfMistake.add(placeOfMistakeSingle);
+        }
+        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
+        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
+        return placeOfMistake;
+    }
+
+    private List<Boolean[]> compareParitetsXv(List<Integer[]> Xv, List<Integer[]> XvWithMistake) {
+
+        // size k1
+        List<Boolean[]> placeOfMistake = new ArrayList<>();
+        for (int i = 0; i < Xv.size(); i++) {
+            Boolean[] placeOfMistakeSingle = new Boolean[k2];
+            for (int j = 0; j < k2; j++) {
+                placeOfMistakeSingle[j] = !Xv.get(i)[j].equals(XvWithMistake.get(i)[j]);
+            }
+            placeOfMistake.add(placeOfMistakeSingle);
+        }
+        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
+        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
+        return placeOfMistake;
+    }
+
+    private int[][] calculateZ(int[][][] matrix) {
+
+        int[][] paritetZ = new int[k1][k2];
+
         for (int i = 0; i < k1; i++) {
             for (int j = 0; j < k2; j++) {
                 int t = 0;
@@ -58,9 +139,10 @@ public class Main {
             }
             System.out.println();
         }
+        return paritetZ;
     }
 
-    private List<Integer[]> calculateXh() {
+    private List<Integer[]> calculateXh(int[][][] matrix) {
 
         List<Integer[]> Xh = new ArrayList<>();
 
@@ -78,24 +160,10 @@ public class Main {
         System.out.println("Xh.get(0) = " + Arrays.toString(Xh.get(0)));
         System.out.println("Xh.get(1) = " + Arrays.toString(Xh.get(1)));
 
-//        int checksumXh = 0;
-//        for (int i = 0; i < k1; i++) {
-//            Xhv[i] = Xh[i];
-//            checksumXh ^= Xh[i];
-//        }
-//
-//        int checksumXv = 0;
-//        for (int i = k1, j = 0; i < k1 + k2; i++, j++) {
-//            Xhv[i] = Xv[j];
-//            checksumXv ^= Xv[j];
-//        }
-//
-//        Xhv[k1 + k2] = checksumXh == checksumXv ? checksumXh : -1;
-//        System.out.println("Xhv[k1 + k2] = " + Xhv[k1 + k2]);
         return Xh;
     }
 
-    private List<Integer[]> calculateXv() {
+    private List<Integer[]> calculateXv(int[][][] matrix) {
 
         List<Integer[]> Xv = new ArrayList<>();
 
