@@ -7,13 +7,13 @@ import java.util.stream.Stream;
 public class Main {
 
     // rows
-    static final int k1 = 2;
+    static final int k1 = 4;
 
     // columns
     static final int k2 = 5;
 
     // z
-    static final int z = 2;
+    static final int z = 1;
 
     int[][][] matrix = new int[k1][k2][z];
 
@@ -34,8 +34,8 @@ public class Main {
         // size k1xk2
         int[][] paritetZ = main.calculateZ(main.matrix);
 
-//        Integer[] indexesWithMistake = {6, 12};
-        Integer[] indexesWithMistake = main.getIndexesWithMistakeFromConsole();
+        Integer[] indexesWithMistake = {6, 12};
+//        Integer[] indexesWithMistake = main.getIndexesWithMistakeFromConsole();
 
         main.fillMatrixByMessageWithMistake(message, indexesWithMistake);
 
@@ -49,6 +49,8 @@ public class Main {
 
         String result = main.findAndCorrectMistake(placeOfMistakeXh, placeOfMistakeXv, placeOfMistakeParitetsZ);
 
+        System.out.println("message : " + message);
+        System.out.println("result  : " + result);
         System.out.println("Result : " + message.equals(result));
 
     }
@@ -75,7 +77,7 @@ public class Main {
         for (int m = 0; m < z; m++) {
             for (int i = 0; i < k1; i++) {
                 for (int j = 0; j < k2; j++) {
-                    finalString.append(matrix[i][j][m]);
+                    finalString.append(matrixWithMistake[i][j][m]);
                 }
             }
         }
@@ -90,13 +92,13 @@ public class Main {
                 placeOfMistake[i][j] = paritetZ[i][j] != paritetZWithMistake[i][j];
             }
         }
-        System.out.println("\nplaceOfMistake paritetZ :");
-        for (int i = 0; i < k1; i++) {
-            for (int j = 0; j < k2; j++) {
-                System.out.print(placeOfMistake[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        System.out.println("\nplaceOfMistake paritetZ :");
+//        for (int i = 0; i < k1; i++) {
+//            for (int j = 0; j < k2; j++) {
+//                System.out.print(placeOfMistake[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
         return placeOfMistake;
     }
 
@@ -111,8 +113,8 @@ public class Main {
             }
             placeOfMistake.add(placeOfMistakeSingle);
         }
-        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
-        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
+//        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
+//        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
         return placeOfMistake;
     }
 
@@ -127,8 +129,8 @@ public class Main {
             }
             placeOfMistake.add(placeOfMistakeSingle);
         }
-        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
-        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
+//        System.out.println("placeOfMistake.get(0) = " + Arrays.toString(placeOfMistake.get(0)));
+//        System.out.println("placeOfMistake.get(1) = " + Arrays.toString(placeOfMistake.get(1)));
         return placeOfMistake;
     }
 
@@ -146,13 +148,13 @@ public class Main {
             }
         }
 
-        System.out.println("\nparitetZ :");
-        for (int i = 0; i < k1; i++) {
-            for (int j = 0; j < k2; j++) {
-                System.out.print(paritetZ[i][j]);
-            }
-            System.out.println();
-        }
+//        System.out.println("\nparitetZ :");
+//        for (int i = 0; i < k1; i++) {
+//            for (int j = 0; j < k2; j++) {
+//                System.out.print(paritetZ[i][j]);
+//            }
+//            System.out.println();
+//        }
         return paritetZ;
     }
 
@@ -171,8 +173,8 @@ public class Main {
             }
             Xh.add(XhSingle);
         }
-        System.out.println("Xh.get(0) = " + Arrays.toString(Xh.get(0)));
-        System.out.println("Xh.get(1) = " + Arrays.toString(Xh.get(1)));
+//        System.out.println("Xh.get(0) = " + Arrays.toString(Xh.get(0)));
+//        System.out.println("Xh.get(1) = " + Arrays.toString(Xh.get(1)));
 
         return Xh;
     }
@@ -192,8 +194,8 @@ public class Main {
             }
             Xv.add(XvSingle);
         }
-        System.out.println("Xv.get(0) = " + Arrays.toString(Xv.get(0)));
-        System.out.println("Xv.get(1) = " + Arrays.toString(Xv.get(1)));
+//        System.out.println("Xv.get(0) = " + Arrays.toString(Xv.get(0)));
+//        System.out.println("Xv.get(1) = " + Arrays.toString(Xv.get(1)));
         return Xv;
     }
 

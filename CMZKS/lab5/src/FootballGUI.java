@@ -15,14 +15,15 @@ public class FootballGUI implements Runnable {
     private JFrame frame;
     private JTable table;
     private Map<String, String> data;
-    private JTextField textFieldA;
-    private JTextField textFieldB;
+    private JTextField textFieldA = new JTextField();
+    private JTextField textFieldB = new JTextField();
+    private JTextField textFieldC = new JTextField();
+    private JTextField textFieldD = new JTextField();
 
-    static Main2 main2 = new Main2();
+    static MainInterface main = new Main3();
 
     // Launch the application.
     public static void main(String[] args) {
-        main2.start();
         SwingUtilities.invokeLater(new FootballGUI());
     }
 
@@ -36,20 +37,7 @@ public class FootballGUI implements Runnable {
 
         this.data = new LinkedHashMap<String, String>() {{
             put(" ", "");
-            put("N", Main2.N.toString());
-            put("e1", String.valueOf(Main2.e1));
-            put("e2", String.valueOf(Main2.e2));
-            put("   ", "");
-            put("C1", Main2.C1.toString());
-            put("C2", Main2.C2.toString());
-            put("r", main2.getR().toString());
-            put("s", main2.getS().toString());
-            put("", "e1*r - e2*s");
-            put("C1^r", main2.getC1r().toString());
-            put("C2^(-s)", main2.getC2s().toString());
-            put("C1^r * C2^(-s)", main2.getC2s().toString());
-            put("m", main2.getM().toString());
-            put("mModN", main2.getMModN().toString());
+            put("N", main.getN().toString());
         }};
     }
 
@@ -109,47 +97,100 @@ public class FootballGUI implements Runnable {
         panel.add(labelc, gbc);
 
         gbc.gridy++;
-        JTextField textFieldc = new JTextField(16);
-        panel.add(textFieldc, gbc);
+        textFieldC = new JTextField(16);
+        panel.add(textFieldC, gbc);
 
         gbc.gridy++;
         JLabel labelD = new JLabel("D");
         panel.add(labelD, gbc);
 
         gbc.gridy++;
-        JTextField textFieldD = new JTextField(16);
+        textFieldD = new JTextField(16);
         panel.add(textFieldD, gbc);
 
         gbc.gridy++;
         JButton displayTeams = new JButton("A*D - B*C = N");
-        displayTeams.addActionListener(new MyActionListener());
+        displayTeams.addActionListener(new CalculateListener());
         panel.add(displayTeams, gbc);
 
         gbc.gridy++;
-        JButton goalSort = new JButton("Sort list by goals");
-        panel.add(goalSort, gbc);
+        JButton clearTextFields = new JButton("Clear A, B, C, D");
+        clearTextFields.addActionListener(new ClearTextFieldsListener());
+        panel.add(clearTextFields, gbc);
+
+        gbc.gridy++;
+        JButton increaseNumberOfRaws = new JButton("Increase Number of Raws");
+        increaseNumberOfRaws.addActionListener(new IncreaseNumberOfRaws());
+        panel.add(increaseNumberOfRaws, gbc);
+
+        gbc.gridy++;
+        JButton clearGrid = new JButton("Clear Grid");
+        clearGrid.addActionListener(new ClearGrid());
+        panel.add(clearGrid, gbc);
 
         return panel;
     }
 
-    public class MyActionListener implements ActionListener {
+    public class CalculateListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-//            main2.start(Integer.parseInt(textFieldA.toString()), Integer.parseInt(textFieldB.toString()));
+            main.start(textFieldA.getText(), textFieldB.getText());
             int count = model.getRowCount();
             for (int i = 0; i < count; i++) {
                 model.removeRow(0);
             }
-            
-//            for (int i = 0; i < data.size(); i++) {
-//                model.addRow(data.entrySet());
-//            }
+
+            data.put("e1", String.valueOf(main.getE1()));
+            data.put("e2", String.valueOf(main.getE2()));
+            data.put("   ", "");
+            data.put("C1", main.getC1().toString());
+            data.put("C2", main.getC2().toString());
+            data.put("r", main.getR().toString());
+            data.put("s", main.getS().toString());
+            data.put(" ", "e1*r - e2*s");
+            data.put("C1^r", main.getC1r().toString());
+            data.put("C2^(-s)", main.getC2s().toString());
+            data.put("C1^r * C2^(-s)", main.getC2s().toString());
+            data.put("m", main.getM().toString());
+            data.put("mModN", main.getMModN().toString());
+
+            textFieldC.setText(main.getS().toString());
+            textFieldD.setText(main.getR().toString());
 
             for (Map.Entry<String, String> entry : data.entrySet()) {
-                model.addRow(new Object[]{entry.getKey(),entry.getValue()});
+                model.addRow(new Object[]{entry.getKey(), entry.getValue()});
             }
         }
     }
-    
+
+    public class ClearGrid implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            model.setNumRows(0);
+        }
+    }
+
+    public class IncreaseNumberOfRaws implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            model.addRow(new Object[]{"", ""});
+        }
+    }
+
+    public class ClearTextFieldsListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+
+            textFieldA.setText("");
+            textFieldB.setText("");
+            textFieldC.setText("");
+            textFieldD.setText("");
+
+        }
+    }
+
 }
