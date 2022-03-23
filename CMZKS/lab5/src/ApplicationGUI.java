@@ -9,7 +9,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class FootballGUI implements Runnable {
+public class ApplicationGUI implements Runnable {
 
     private DefaultTableModel model;
     private JFrame frame;
@@ -24,10 +24,10 @@ public class FootballGUI implements Runnable {
 
     // Launch the application.
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new FootballGUI());
+        SwingUtilities.invokeLater(new ApplicationGUI());
     }
 
-    public FootballGUI() {
+    public ApplicationGUI() {
         String[] columnNames = {" ", "AD - BC = 1"};
         this.model = new DefaultTableModel();
 
@@ -36,7 +36,7 @@ public class FootballGUI implements Runnable {
         }
 
         this.data = new LinkedHashMap<String, String>() {{
-            put(" ", "");
+            put("", "");
             put("N", main.getN().toString());
         }};
     }
@@ -44,7 +44,7 @@ public class FootballGUI implements Runnable {
     // Create the application.
     @Override
     public void run() {
-        frame = new JFrame("Football GUI");
+        frame = new JFrame("Application GUI");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.add(createTablePanel(), BorderLayout.CENTER);
