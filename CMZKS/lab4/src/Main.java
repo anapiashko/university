@@ -7,13 +7,13 @@ import java.util.stream.Stream;
 public class Main {
 
     // rows
-    static final int k1 = 4;
+    static final int k1 = 2;
 
     // columns
     static final int k2 = 5;
 
     // z
-    static final int z = 1;
+    static final int z = 2;
 
     int[][][] matrix = new int[k1][k2][z];
 
@@ -34,8 +34,8 @@ public class Main {
         // size k1xk2
         int[][] paritetZ = main.calculateZ(main.matrix);
 
-        Integer[] indexesWithMistake = {6, 12};
-//        Integer[] indexesWithMistake = main.getIndexesWithMistakeFromConsole();
+//        Integer[] indexesWithMistake = {6, 12};
+        Integer[] indexesWithMistake = main.getIndexesWithMistakeFromConsole();
 
         main.fillMatrixByMessageWithMistake(message, indexesWithMistake);
 
@@ -50,13 +50,13 @@ public class Main {
         String result = main.findAndCorrectMistake(placeOfMistakeXh, placeOfMistakeXv, placeOfMistakeParitetsZ);
 
         System.out.println("message : " + message);
-        System.out.println("result  : " + result);
+//        System.out.println("result  : " + result);
         System.out.println("Result : " + message.equals(result));
 
     }
 
     private String findAndCorrectMistake(List<Boolean[]> placeOfMistakeXh, List<Boolean[]> placeOfMistakeXv,
-                                       boolean[][] placeOfMistakeParitetsZ) {
+                                         boolean[][] placeOfMistakeParitetsZ) {
 
 
         for (int i = 0; i < k1; i++) {
@@ -73,7 +73,7 @@ public class Main {
 
         printMatrix("\nCorrected matrix with mistakes : ", matrixWithMistake);
 
-        StringBuilder finalString= new StringBuilder();
+        StringBuilder finalString = new StringBuilder();
         for (int m = 0; m < z; m++) {
             for (int i = 0; i < k1; i++) {
                 for (int j = 0; j < k2; j++) {
@@ -148,13 +148,13 @@ public class Main {
             }
         }
 
-//        System.out.println("\nparitetZ :");
-//        for (int i = 0; i < k1; i++) {
-//            for (int j = 0; j < k2; j++) {
-//                System.out.print(paritetZ[i][j]);
-//            }
-//            System.out.println();
-//        }
+        System.out.println("\nparitetZ :");
+        for (int i = 0; i < k1; i++) {
+            for (int j = 0; j < k2; j++) {
+                System.out.print(paritetZ[i][j]);
+            }
+            System.out.println();
+        }
         return paritetZ;
     }
 
@@ -173,8 +173,10 @@ public class Main {
             }
             Xh.add(XhSingle);
         }
-//        System.out.println("Xh.get(0) = " + Arrays.toString(Xh.get(0)));
-//        System.out.println("Xh.get(1) = " + Arrays.toString(Xh.get(1)));
+
+        for (int i = 0; i < Xh.size(); i++) {
+            System.out.println("Xh[" + i + "] = " + Arrays.toString(Xh.get(i)));
+        }
 
         return Xh;
     }
@@ -194,13 +196,16 @@ public class Main {
             }
             Xv.add(XvSingle);
         }
-//        System.out.println("Xv.get(0) = " + Arrays.toString(Xv.get(0)));
-//        System.out.println("Xv.get(1) = " + Arrays.toString(Xv.get(1)));
+
+        for (int i = 0; i < Xv.size(); i++) {
+            System.out.println("Xv[" + i + "] = " + Arrays.toString(Xv.get(i)));
+        }
         return Xv;
     }
 
     private void fillMatrixByMessageWithMistake(String message, Integer[] indexesWithMistake) {
 
+        System.out.println();
         for (int m = 0, c = 0; m < z; m++) {
             for (int i = 0; i < k1; i++) {
                 for (int j = 0; j < k2; j++, c++) {
